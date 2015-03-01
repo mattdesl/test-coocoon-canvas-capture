@@ -5,8 +5,27 @@
 Testing a bug in CocoonJS with toDataURL. Steps to reproduce:
 
 ```sh
+git clone https://github.com/mattdesl/test-coocoon-canvas-capture.git
+cd test-cocoon-canvas-capture
 
+npm install
 ```
+
+To get a ZIP for testing through the CocoonJS launcher:
+
+```sh
+npm run build
+```
+
+Will save a `test-capture.zip` file.
+
+To test locally in the browser:
+
+```sh
+npm run start
+```
+
+And then open `localhost:9966` -- file changes to `index.js` will trigger a live reload event.
 
 ## License
 
