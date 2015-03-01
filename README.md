@@ -27,6 +27,13 @@ npm run start
 
 And then open `localhost:9966` -- file changes to `index.js` will trigger a live reload event.
 
+
+Expected output (Webview+)
+![screen](http://i.imgur.com/hwPRe4N.png)
+
+Actual output (Canvas+)
+![screen2](http://i.imgur.com/Vx6T3Y7.png)
+
 ## License
 
 MIT, see [LICENSE.md](http://github.com/mattdesl/test-coocoon-canvas-capture/blob/master/LICENSE.md) for details.
