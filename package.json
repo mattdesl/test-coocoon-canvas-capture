@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "three": "^0.70.0",
-    "three-orbit-viewer": "^69.2.6",
+    "three-orbit-viewer": "^69.2.9",
     "touches": "^1.0.3"
   },
   "devDependencies": {
+    "baboon-image-uri": "^1.0.1",
+    "base64-js": "0.0.8",
     "browserify": "^9.0.3",
     "budo": "^1.1.0",
     "garnish": "^2.1.0",
+    "jpeg-js": "^0.1.1",
     "watchify": "^2.4.0"
   },
   "scripts": {
