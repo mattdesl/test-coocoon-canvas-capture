@@ -63,10 +63,13 @@ function capture() {
     app.renderer.clear()
     app.renderer.render(app.scene, app.camera)
 
+    var now = Date.now()
     //snap the image
     var data = canvas.toDataURL('image/jpeg', 0.9)
+    console.log("toDataURL", (Date.now()-now), "ms")
     var image = new Image()
     image.onload = function() {
+        console.log("image.onload", (Date.now()-now), "ms")
         var tex = new THREE.Texture()
         tex.image = image
         tex.minFilter = THREE.NearestFilter
@@ -75,6 +78,7 @@ function capture() {
         box.material = new THREE.MeshBasicMaterial({ map: tex })
     }
     image.src = data
+    now = Date.now()
 
     canvas.width = oldWidth
     canvas.height = oldHeight
