@@ -35,6 +35,12 @@ box.rotation.y = 1.3
 app.scene.add(box)
 
 function ready() {
+    var gl = app.renderer.getContext()
+    // console.log("SUPPORTED:", gl.getSupportedExtensions())
+    
+    //This line crashes on Galaxy S3 and S4
+    console.log("EXTENSION:", gl.getExtension('GL_OES_vertex_array_object'))
+    
     require('touches')().once('start', function() {
         capture()
     })
