@@ -10,6 +10,8 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
+    "2d-context": "^1.2.0",
+    "jpg-stream": "^1.0.3",
     "three": "^0.70.0",
     "three-orbit-viewer": "^69.2.9",
     "touches": "^1.0.3"

@@ -40,7 +40,6 @@ function ready() {
     })
 }
 
-
 function capture() {
     var target = new THREE.WebGLRenderTarget(1024, 1024)
 
@@ -48,18 +47,13 @@ function capture() {
     app.camera.updateProjectionMatrix()
     app.renderer.render(app.scene, app.camera, target)
 
-
     app.renderer.setRenderTarget(target)
     var gl = app.renderer.getContext()
-    var time = Date.now()
     var b64 = convert(gl, { width: target.width, height: target.height, quality: 0.9 })
 
-    var now = Date.now()
-    console.log("Done conversion", (now-time), "ms")
 
     var img = new Image()
     img.onload = function() {
-        console.log("Done image loading", (Date.now()-now), "ms")
 
         bg.visible = false
         var tex = new THREE.Texture()
@@ -70,7 +64,6 @@ function capture() {
         box.material.needsUpdate = true
     }
     img.src = b64
-    now = Date.now()
 
     var canvas = app.renderer.domElement
     app.camera.aspect = canvas.width/canvas.height
