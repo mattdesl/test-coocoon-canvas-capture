@@ -16,9 +16,10 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "budo": "^1.1.0",
+    "budo": "^3.0.0-rc1",
     "garnish": "^2.1.0",
-    "watchify": "^2.4.0"
+    "t": "^0.5.1",
+    "watchify": "^3.1.0"
   },
   "scripts": {
     "start": "budo index.js:bundle.js --live | garnish -v",
