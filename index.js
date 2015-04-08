@@ -20,70 +20,51 @@ var light = new THREE.PointLight(0xaaddff, 1.0, 1000)
 light.position.set(1, 2, -1)
 app.scene.add(light)
 
+var target = new THREE.WebGLRenderTarget(512, 512, {
+    anisotropy: 0,
+    format: THREE.RGBFormat
+})
+target.generateMipmaps = false;
+target.minFilter = THREE.LinearFilter;
+target.magFilter = THREE.LinearFilter;
+
 var bg = new THREE.Mesh(new THREE.PlaneGeometry(6,3.5,1), new THREE.MeshBasicMaterial({
-    map: THREE.ImageUtils.loadTexture('street.png', undefined, ready)
+    map: THREE.ImageUtils.loadTexture('street.png', undefined, ready),
+    depthWrite: false
 }))
 bg.rotation.y = -Math.PI
 app.scene.add(bg)
 
 var geo = new THREE.BoxGeometry(1,1,1)
-var mat = new THREE.MeshLambertMaterial({ depthTest: false })
+var mat = new THREE.MeshLambertMaterial({ depthTest: false, map: target })
 var box = new THREE.Mesh(geo, mat)
 box.rotation.x = -2
 box.rotation.z = -4
 app.scene.add(box)
+
+
+
+geo = new THREE.SphereGeometry(1)
+mat = new THREE.MeshLambertMaterial({ color: 0xff0000 })
+var sphere = new THREE.Mesh(geo, mat)
+sphere.position.x = -2
+sphere.scale.multiplyScalar(0.25)
+app.scene.add(sphere)
  
 app.on('tick', function(dt) {
     bg.lookAt(app.camera.position)
 })
 
+app.on('render', function() {
+    box.visible = false
+    app.renderer.render(app.scene, app.camera, target)
+    box.visible = true
+
+})
+
 //once texture is loaded...
-function ready() {
-    //on first finger tap, do a capture
-    require('touches')().once('start', function() {
-        console.log("Capturing")
-        capture()
-        bg.visible = false
-    })    
-}
-
-function capture() {
-    var canvas = app.renderer.domElement
-    var oldWidth = canvas.width,
-        oldHeight = canvas.height
-
-    var width = 1280,
-        height = 600
-    canvas.width = width
-    canvas.height = height
-
-    app.renderer.setViewport(0, 0, width, height)
-    app.camera.aspect = width/height
-    app.camera.updateProjectionMatrix()
-    app.renderer.clear()
-    app.renderer.render(app.scene, app.camera)
-
-    var now = Date.now()
-    //snap the image
-    var data = canvas.toDataURL('image/jpeg', 0.9)
-    console.log("toDataURL", (Date.now()-now), "ms")
-    var image = new Image()
-    image.onload = function() {
-        console.log("image.onload", (Date.now()-now), "ms")
-        var tex = new THREE.Texture()
-        tex.image = image
-        tex.minFilter = THREE.NearestFilter
-        tex.magFilter = THREE.NearestFilter
-        tex.needsUpdate = true
-        box.material = new THREE.MeshBasicMaterial({ map: tex })
-    }
-    image.src = data
-    now = Date.now()
-
-    canvas.width = oldWidth
-    canvas.height = oldHeight
-
-    app.renderer.setViewport(0, 0, oldWidth, oldHeight)
-    app.camera.aspect = oldWidth/oldHeight
-    app.camera.updateProjectionMatrix()
+function ready(tex) {
+    tex.generateMipmaps = false
+    tex.minFilter = THREE.LinearFilter
+    tex.magFilter = THREE.LinearFilter
 }

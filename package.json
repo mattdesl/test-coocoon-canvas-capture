@@ -21,7 +21,7 @@
     "watchify": "^2.4.0"
   },
   "scripts": {
-    "start": "budo index.js -o bundle.js --live | garnish -v",
+    "start": "budo index.js:bundle.js --live | garnish -v",
     "bundle": "browserify index.js -o bundle.js",
     "zip": "rm -rf test-capture.zip && zip -r test-capture.zip *.{js,html,png}",
     "build": "npm run bundle && npm run zip"
