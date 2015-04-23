@@ -381,8 +381,8 @@
     */
     extension.createSignal = function(){
         /** @lends Cocoon.Signal.prototype */
-      this.handle = null;
-      this.signals = {};
+        this.handle = null;
+        this.signals = {};
 
         /**
         * Registers a new Signal.
@@ -393,7 +393,7 @@
         * @example
         * signal.register("banner.ready", new Cocoon.EventHandler);
         */
-      this.register = function(namespace, handle){
+        this.register = function(namespace, handle){
 
             if( (!namespace) && (!handle)) throw new Error("Can't create signal " + (namespace || ""));
 
@@ -414,7 +414,7 @@
 
             throw new Error("Can't create handler for " + namespace + " signal.");
             return false;
-      },
+        },
 
         /**
         * Exposes the already defined signals, and can be use to atach a callback to a Cocoon.EventHandler event.
@@ -426,8 +426,8 @@
         * @example
         * Cocoon.namespace.on("event",function(){});
         */
-      this.expose = function(){
-        return function(signal, callback, params){
+        this.expose = function(){
+            return function(signal, callback, params){
                 var once = false;
 
                 if(arguments.length === 1){
@@ -484,8 +484,8 @@
                     }
                 }
 
-        }.bind(this);
-      }
+            }.bind(this);
+        }
     }
 
     return extension;
@@ -2796,8 +2796,8 @@ Cocoon.define("Cocoon.Widget" , function(extension){
     * This namespace represents the CocoonJS camera extension API.
     *
     * <div class="alert alert-success">
-  *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Camera/videopuzzle">Videopuzzle demo</a>.
-  *</div>
+    *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Camera/videopuzzle">Videopuzzle demo</a>.
+    *</div>
     *
     * @namespace Cocoon.Camera
     * @example
@@ -2830,10 +2830,10 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      * @property {string} Cocoon.Camera.CameraType.FRONT - Represents the front camera on the device.
      * @property {string} Cocoon.Camera.CameraType.BACK - Represents the back camera on the device.
      */
-  extension.CameraType = {
-      FRONT : "FRONT",
-      BACK : "BACK"
-  };
+    extension.CameraType = {
+        FRONT : "FRONT",
+        BACK : "BACK"
+    };
 
     /**
      * The predefined possible camera video capturing image format types.
@@ -2848,17 +2848,17 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      * @property {string} Cocoon.Camera.CaptureFormatType.YV12
      * @property {string} Cocoon.Camera.CaptureFormatType.BGRA32
      */
-  extension.CaptureFormatType = {
-      JPEG : "JPEG",
-      RGB_565 : "RGB_565",
-      NV21 : "NV21",
-      NV16 : "NV16",
-      YUY2 : "YUY2",
-      YV12 : "YV12",
-      BGRA32 : "32BGRA"
-  };
+    extension.CaptureFormatType = {
+        JPEG : "JPEG",
+        RGB_565 : "RGB_565",
+        NV21 : "NV21",
+        NV16 : "NV16",
+        YUY2 : "YUY2",
+        YV12 : "YV12",
+        BGRA32 : "32BGRA"
+    };
 
-  /**
+    /**
      * The object that represents the information of a camera. It includes all the information to be able to setup a camera to capture video or to take pictures.
      * @memberof Cocoon.Camera
      * @name Cocoon.Camera.CameraInfo
@@ -2869,133 +2869,133 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      * @property {string} Cocoon.Camera.CameraInfo.supportedVideoFrameRates An array of numbers that represent the supported video frame rates for the camera.
      * @property {string} Cocoon.Camera.CameraInfo.supportedImageFormats An array of {@link Cocoon.Camera.CaptureFormatType} values that represent the supported video format types for the camera.
      */
-  extension.CameraInfo =  {
+    extension.CameraInfo =  {
 
-    cameraIndex : 0,
-
-    cameraType : extension.CameraType.BACK,
-
-    supportedVideoSizes : [],
-
-    supportedVideoFrameRates : [],
-
-    supportedVideoCaptureImageFormats : []
-  };
-
-  /**
-  * Returns the number of available camera in the platform/device.
-  * @memberof Cocoon.Camera
-  * @function getNumberOfCameras
-  * @returns {number} The number of cameras available in the platform/device.
-  * @example
-  * console.log(Cocoon.Camera.getNumberOfCameras());
-  */
-  extension.getNumberOfCameras = function()
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
-    {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "getNumberOfCameras", arguments);
-    }else{
-      return (navigator.getUserMedia_) ? 1 : 0;
-    }
-  };
-
-  /**
-  * Returns an array of {@link Cocoon.Camera.CameraInfo} objects representing all the information of all the cameras available in the platform/device.
-  * @memberof Cocoon.Camera
-  * @function getAllCamerasInfo
-  * @returns {Array} An array of {@link Cocoon.Camera.CameraInfo} objects.
-  * @example
-  * console.log(JSON.stringify(Cocoon.Camera.getAllCamerasInfo()));
-  */
-  extension.getAllCamerasInfo = function()
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
-    {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "getAllCamerasInfo", arguments);
-    }
-  };
-
-  /**
-  * Returns the {@link Cocoon.Camera.CameraInfo} object that represents all the information of the specified camera index in the platform/device.
-  * @memberof Cocoon.Camera
-  * @function getCameraInfoByIndex
-  * @param {number} cameraIndex The index of the camera to get the info from. The index should be between 0 and N (Being N the value returned by {@link Cocoon.Camera.getNumberOfCameras}).
-  * @returns {Cocoon.Camera.CameraInfo} The {@link Cocoon.Camera.CameraInfo} of the given camera index.
-  * @example
-  * console.log(JSON.stringify(Cocoon.Camera.getCameraInfoByIndex(0)));
-  */
-  extension.getCameraInfoByIndex = function(cameraIndex)
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
-    {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "getCameraInfoByIndex", arguments);
-    }
-  };
-
-  /**
-  * Returns the {@link Cocoon.Camera.CameraInfo} object that represents all the information of the first camera of the specified type found in the platform/device.
-  * @memberof Cocoon.Camera
-  * @function getCameraInfoByType
-  * @param {Cocoon.Camera.CameraType} cameraType The type of the camera to get the info from.
-  * @returns {Cocoon.Camera.CameraInfo} The {@link Cocoon.Camera.CameraInfo} of the first camera of the given camera type that has been found in the platform/device.
-  */
-  extension.getCameraInfoByType = function(cameraType)
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
-    {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "getCameraInfoByType", arguments);
-    }
-  };
-
-  /**
-  * Starts a camera to capture video. The developer must specify at least the index of the camera to be used. Some other setup parameters can also be passed to control the video capture. An image object
-  * that will be automatically updated with the captured frames is returned so the developer just need to draw the image in every frame. A null image object is returned if the setup did not work or there is
-  * no available camera.
-  * @memberof Cocoon.Camera
-  * @function start
-  * @param {object} params - The object itself
-  * @param {number} params.cameraIndex The index of the camera to start video capture with.
-  * @param {number} params.captureWidth The hozirontal size of the video capture resolution. If the value does not correspond to any of the sizes supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
-  * If no value is given, the maximum size available is used.
-  * @param {number} params.captureHeight The vertical size of the video capture resolution. If value does not correspond to any of the sizes supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
-  * If no value is given, the maximum size available is used.
-  * @param {number} params.captureFrameRate The frame rate to capture the video at. If the value does not correspond to any of the frame rates supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
-  * If no value is given, the maximum frame rate available is used.
-  * @param {value} params.captureImageFormat A value from the available {@link Cocoon.Camera.CaptureFormatType} formats to specify the format of the images that will be captured. See {@link Cocoon.Camera.CameraInfo}.
-  * If no value is given, the first available capture image format is used.
-  * @returns {image} An image object that will automatically update itself with the captured frames or null if the camera capture could not start.
-  * @example
-  *   Cocoon.Camera.start({
-  *     success : function(stream){
-  *         ctx.fillRect(0, 0, w, h);
-  *         ctx.drawImage(stream, 0, 0, w, h);
-  *     },
-  *     error : function(){
-  *       console.log("Error", arguments);
-  *     }
-  *   });
-  */
-  extension.start = function(params) {
-
-    if( !((Boolean(params.success)) && (Boolean(params.error))) ) throw new Error("Missing callbacks for Cocoon.Camera.start();");
-
-    if (Cocoon.nativeAvailable)
-    {
-      var properties = {
         cameraIndex : 0,
-        width : 50,
-        height : 50,
-        frameRate : 25
-      };
 
-      var args = Cocoon.clone(properties,params);
-      var img = Cocoon.callNative("IDTK_SRV_CAMERA", "startCapturing", args);
+        cameraType : extension.CameraType.BACK,
 
-      if(Boolean(img)) { params.success(img); }else{ params.error(false); }
+        supportedVideoSizes : [],
 
-    }else{
-      navigator.getUserMedia_( {
+        supportedVideoFrameRates : [],
+
+        supportedVideoCaptureImageFormats : []
+    };
+
+    /**
+    * Returns the number of available camera in the platform/device.
+    * @memberof Cocoon.Camera
+    * @function getNumberOfCameras
+    * @returns {number} The number of cameras available in the platform/device.
+    * @example
+    * console.log(Cocoon.Camera.getNumberOfCameras());
+    */
+    extension.getNumberOfCameras = function()
+    {
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "getNumberOfCameras", arguments);
+        }else{
+            return (navigator.getUserMedia_) ? 1 : 0;
+        }
+    };
+
+    /**
+    * Returns an array of {@link Cocoon.Camera.CameraInfo} objects representing all the information of all the cameras available in the platform/device.
+    * @memberof Cocoon.Camera
+    * @function getAllCamerasInfo
+    * @returns {Array} An array of {@link Cocoon.Camera.CameraInfo} objects.
+    * @example
+    * console.log(JSON.stringify(Cocoon.Camera.getAllCamerasInfo()));
+    */
+    extension.getAllCamerasInfo = function()
+    {
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "getAllCamerasInfo", arguments);
+        }
+    };
+
+    /**
+    * Returns the {@link Cocoon.Camera.CameraInfo} object that represents all the information of the specified camera index in the platform/device.
+    * @memberof Cocoon.Camera
+    * @function getCameraInfoByIndex
+    * @param {number} cameraIndex The index of the camera to get the info from. The index should be between 0 and N (Being N the value returned by {@link Cocoon.Camera.getNumberOfCameras}).
+    * @returns {Cocoon.Camera.CameraInfo} The {@link Cocoon.Camera.CameraInfo} of the given camera index.
+    * @example
+    * console.log(JSON.stringify(Cocoon.Camera.getCameraInfoByIndex(0)));
+    */
+    extension.getCameraInfoByIndex = function(cameraIndex)
+    {
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "getCameraInfoByIndex", arguments);
+        }
+    };
+
+    /**
+    * Returns the {@link Cocoon.Camera.CameraInfo} object that represents all the information of the first camera of the specified type found in the platform/device.
+    * @memberof Cocoon.Camera
+    * @function getCameraInfoByType
+    * @param {Cocoon.Camera.CameraType} cameraType The type of the camera to get the info from.
+    * @returns {Cocoon.Camera.CameraInfo} The {@link Cocoon.Camera.CameraInfo} of the first camera of the given camera type that has been found in the platform/device.
+    */
+    extension.getCameraInfoByType = function(cameraType)
+    {
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "getCameraInfoByType", arguments);
+        }
+    };
+
+    /**
+    * Starts a camera to capture video. The developer must specify at least the index of the camera to be used. Some other setup parameters can also be passed to control the video capture. An image object
+    * that will be automatically updated with the captured frames is returned so the developer just need to draw the image in every frame. A null image object is returned if the setup did not work or there is
+    * no available camera.
+    * @memberof Cocoon.Camera
+    * @function start
+    * @param {object} params - The object itself
+    * @param {number} params.cameraIndex The index of the camera to start video capture with.
+    * @param {number} params.captureWidth The hozirontal size of the video capture resolution. If the value does not correspond to any of the sizes supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
+    * If no value is given, the maximum size available is used.
+    * @param {number} params.captureHeight The vertical size of the video capture resolution. If value does not correspond to any of the sizes supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
+    * If no value is given, the maximum size available is used.
+    * @param {number} params.captureFrameRate The frame rate to capture the video at. If the value does not correspond to any of the frame rates supported by the camera, the closest one is used. See {@link Cocoon.Camera.CameraInfo}.
+    * If no value is given, the maximum frame rate available is used.
+    * @param {value} params.captureImageFormat A value from the available {@link Cocoon.Camera.CaptureFormatType} formats to specify the format of the images that will be captured. See {@link Cocoon.Camera.CameraInfo}.
+    * If no value is given, the first available capture image format is used.
+    * @returns {image} An image object that will automatically update itself with the captured frames or null if the camera capture could not start.
+    * @example
+    *   Cocoon.Camera.start({
+    *     success : function(stream){
+    *         ctx.fillRect(0, 0, w, h);
+    *         ctx.drawImage(stream, 0, 0, w, h);
+    *     },
+    *     error : function(){
+    *       console.log("Error", arguments);
+    *     }
+    *   });
+    */
+    extension.start = function(params) {
+
+        if( !((Boolean(params.success)) && (Boolean(params.error))) ) throw new Error("Missing callbacks for Cocoon.Camera.start();");
+
+        if (Cocoon.nativeAvailable)
+        {
+            var properties = {
+                cameraIndex : 0,
+                width : 50,
+                height : 50,
+                frameRate : 25
+            };
+
+            var args = Cocoon.clone(properties,params);
+            var img = Cocoon.callNative("IDTK_SRV_CAMERA", "startCapturing", args);
+
+            if(Boolean(img)) { params.success(img); }else{ params.error(false); }
+
+        }else{
+            navigator.getUserMedia_( {
               video:true, audio:false
             },
             function(stream) {
@@ -3005,39 +3005,39 @@ Cocoon.define("Cocoon.Widget" , function(extension){
                 params.error(error);
             });
 
-    }
-  };
+        }
+    };
 
-  /**
-  * Stops a camera that is already started capturing video.
-  * @memberof Cocoon.Camera
-  * @function stop
-  * @param cameraIndex The index of the camera to stop capturing video.
-  */
-  extension.stop = function(cameraIndex)
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+    /**
+    * Stops a camera that is already started capturing video.
+    * @memberof Cocoon.Camera
+    * @function stop
+    * @param cameraIndex The index of the camera to stop capturing video.
+    */
+    extension.stop = function(cameraIndex)
     {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "stopCapturing", arguments);
-    }
-  };
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "stopCapturing", arguments);
+        }
+    };
 
-  /**
-  * Indicates if a camera is capturing video or not.
-  * @memberof Cocoon.Camera
-  * @function isCapturing
-  * @param cameraIndex The index of the camera to check if is capturing video or not.
-  * @returns {boolean} A flag indicating if the given camera (by index) is capturing video (true) or not (false).
-  */
-  extension.isCapturing = function(cameraIndex)
-  {
-    if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+    /**
+    * Indicates if a camera is capturing video or not.
+    * @memberof Cocoon.Camera
+    * @function isCapturing
+    * @param cameraIndex The index of the camera to check if is capturing video or not.
+    * @returns {boolean} A flag indicating if the given camera (by index) is capturing video (true) or not (false).
+    */
+    extension.isCapturing = function(cameraIndex)
     {
-      return Cocoon.callNative("IDTK_SRV_CAMERA", "isCapturing", arguments);
-    }
-  };
+        if (Cocoon.nativeAvailable && navigator.isCocoonJS)
+        {
+            return Cocoon.callNative("IDTK_SRV_CAMERA", "isCapturing", arguments);
+        }
+    };
 
-  return extension;
+    return extension;
 });;Cocoon.define("Cocoon.Ad" , function(extension){
     "use strict";
 
@@ -3045,12 +3045,12 @@ Cocoon.define("Cocoon.Widget" , function(extension){
     * This namespace represents the Cocoon Advertisement extension API.
     *
     * <div class="alert alert-success">
-  *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Ads">Ads demo</a>.
-  *</div>
+    *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Ads">Ads demo</a>.
+    *</div>
     *
-  * <div class="alert alert-warning">
-  *    <strong>Warning!</strong> This JavaScript extension requires some configuration parameters on the <a href="https://ludei.zendesk.com/hc/en-us">cloud compiler</a>!
-  * </div>
+    * <div class="alert alert-warning">
+    *    <strong>Warning!</strong> This JavaScript extension requires some configuration parameters on the <a href="https://ludei.zendesk.com/hc/en-us">cloud compiler</a>!
+    * </div>
     * @namespace Cocoon.Ad
     * @example
     * // This example shows how to integrate ads in your game
@@ -3072,440 +3072,440 @@ Cocoon.define("Cocoon.Widget" , function(extension){
 
     /**
     * The predefined possible layouts for a banner ad.
-  * @name Cocoon.Ad.BannerLayout
-  * @memberOf Cocoon.Ad
-  * @property {string} TOP_CENTER  Specifies that the banner must be shown in the top of the screen and vertically centered.
-  * @property {string} BOTTOM_CENTER  Specifies that the banner must be shown in the bottom of the screen and vertically centered.
-  */
-  extension.BannerLayout =
-  {
+    * @name Cocoon.Ad.BannerLayout
+    * @memberOf Cocoon.Ad
+    * @property {string} TOP_CENTER  Specifies that the banner must be shown in the top of the screen and vertically centered.
+    * @property {string} BOTTOM_CENTER  Specifies that the banner must be shown in the bottom of the screen and vertically centered.
+    */
+    extension.BannerLayout =
+    {
 
-      TOP_CENTER      : "TOP_CENTER",
+        TOP_CENTER      : "TOP_CENTER",
 
-      BOTTOM_CENTER   : "BOTTOM_CENTER"
-  };
+        BOTTOM_CENTER   : "BOTTOM_CENTER"
+    };
 
-  /**
+    /**
     * A rectangle object that contains the banner dimensions
-  * @memberOf Cocoon.Ad
-  * @function Rectangle
-  * @private
-  * @param {number} x The top lef x coordinate of the rectangle
-  * @param {number} y The top lef y coordinate of the rectangle
-  * @param {number} width The rectangle width
-  * @param {number} height The rectangle height
-  * @example
-  * var rect = new Cocoon.Ad.Rectangle(0,0,300,300);
-  */
-  extension.Rectangle = function(x, y, width, height)
-  {
+    * @memberOf Cocoon.Ad
+    * @function Rectangle
+    * @private
+    * @param {number} x The top lef x coordinate of the rectangle
+    * @param {number} y The top lef y coordinate of the rectangle
+    * @param {number} width The rectangle width
+    * @param {number} height The rectangle height
+    * @example
+    * var rect = new Cocoon.Ad.Rectangle(0,0,300,300);
+    */
+    extension.Rectangle = function(x, y, width, height)
+    {
 
-      this.x = x;
+        this.x = x;
 
-      this.y = y;
+        this.y = y;
 
-      this.width = width;
+        this.width = width;
 
-      this.height = height;
-  };
+        this.height = height;
+    };
 
-  extension.Banner = function(id)
-  {
-    if (typeof id !== 'number') throw "The given ad ID is not a number.";
+    extension.Banner = function(id)
+    {
+        if (typeof id !== 'number') throw "The given ad ID is not a number.";
 
-    this.id = id;
-    var me = this;
+        this.id = id;
+        var me = this;
 
-    this.onBannerShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannershow", function(sourceListener, args)
-      {
-        if (me.id === args[0])
+        this.onBannerShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannershow", function(sourceListener, args)
         {
-          sourceListener();
-        }
-      });
+            if (me.id === args[0])
+            {
+                sourceListener();
+            }
+        });
 
-    this.onBannerHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerhide", function(sourceListener, args)
-      {
-        if (me.id === args[0])
+        this.onBannerHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerhide", function(sourceListener, args)
         {
-          sourceListener();
-        }
-      });
+            if (me.id === args[0])
+            {
+                sourceListener();
+            }
+        });
 
-    this.onBannerReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerready", function(sourceListener, args)
-      {
-        if (me.id === args[0])
+        this.onBannerReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerready", function(sourceListener, args)
         {
-          sourceListener(args[1], args[2]);
+            if (me.id === args[0])
+            {
+                sourceListener(args[1], args[2]);
+            }
+        });
+
+        var signal = new Cocoon.Signal.createSignal();
+
+        signal.register("ready", this.onBannerReady);
+
+        signal.register("shown", this.onBannerShown);
+
+        signal.register("hidden", this.onBannerHidden);
+
+        this.on = signal.expose();
+    };
+
+    extension.Banner.prototype = {
+
+        showBanner : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                Cocoon.callNative("IDTK_SRV_AD", "showBanner", [this.id], true);
+            }
+        },
+
+        hideBanner : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                Cocoon.callNative("IDTK_SRV_AD", "hideBanner", [this.id], true);
+            }
+        },
+
+        load : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                Cocoon.callNative("IDTK_SRV_AD", "refreshBanner", [this.id], true);
+            }
+        },
+
+        getRectangle : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                return Cocoon.callNative("IDTK_SRV_AD", "getRectangle", [this.id]);
+            }
+        },
+
+        setRectangle : function(rect)
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                return Cocoon.callNative("IDTK_SRV_AD", "setRectangle", [this.id, rect]);
+            }
+        },
+
+        setBannerLayout : function(bannerLayout)
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                return Cocoon.callNative("IDTK_SRV_AD", "setBannerLayout", [this.id, bannerLayout]);
+            }
         }
-      });
+    };
 
-      var signal = new Cocoon.Signal.createSignal();
-
-    signal.register("ready", this.onBannerReady);
-
-    signal.register("shown", this.onBannerShown);
-
-    signal.register("hidden", this.onBannerHidden);
-
-    this.on = signal.expose();
-  };
-
-  extension.Banner.prototype = {
-
-    showBanner : function()
+    extension.Interstitial = function(id)
     {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        Cocoon.callNative("IDTK_SRV_AD", "showBanner", [this.id], true);
-      }
-    },
+        if (typeof id !== 'number') throw "The given ad ID is not a number.";
 
-    hideBanner : function()
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        Cocoon.callNative("IDTK_SRV_AD", "hideBanner", [this.id], true);
-      }
-    },
+        this.id = id;
+        var me = this;
 
-    load : function()
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        Cocoon.callNative("IDTK_SRV_AD", "refreshBanner", [this.id], true);
-      }
-    },
+        this.onFullScreenShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenshow", function(sourceListener, args)
+        {
+            if (me.id === args[0]) {
+                sourceListener();
+            }
+        });
 
-    getRectangle : function()
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        return Cocoon.callNative("IDTK_SRV_AD", "getRectangle", [this.id]);
-      }
-    },
+        this.onFullScreenHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenhide", function(sourceListener, args)
+        {
+            if (me.id === args[0]) {
+                sourceListener();
+            }
+        });
 
-    setRectangle : function(rect)
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        return Cocoon.callNative("IDTK_SRV_AD", "setRectangle", [this.id, rect]);
-      }
-    },
+        this.onFullScreenReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenready", function(sourceListener, args)
+        {
+            if (me.id === args[0]) {
+                sourceListener();
+            }
+        });
 
-    setBannerLayout : function(bannerLayout)
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        return Cocoon.callNative("IDTK_SRV_AD", "setBannerLayout", [this.id, bannerLayout]);
-      }
-    }
-  };
+        var signal = new Cocoon.Signal.createSignal();
 
-  extension.Interstitial = function(id)
-  {
-    if (typeof id !== 'number') throw "The given ad ID is not a number.";
+        signal.register("ready", this.onFullScreenReady);
+        signal.register("shown", this.onFullScreenShown);
+        signal.register("hidden", this.onFullScreenHidden);
 
-    this.id = id;
-    var me = this;
+        this.on = signal.expose();
 
-    this.onFullScreenShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenshow", function(sourceListener, args)
-      {
-        if (me.id === args[0]) {
-          sourceListener();
+    };
+
+    extension.Interstitial.prototype = {
+
+        showInterstitial : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                return Cocoon.callNative("IDTK_SRV_AD", "showFullScreen", [this.id], true);
+            }
+        },
+
+        refreshInterstitial : function()
+        {
+            if (Cocoon.Ad.nativeAvailable)
+            {
+                return Cocoon.callNative("IDTK_SRV_AD", "refreshFullScreen", [this.id], true);
+            }
         }
-      });
+    };
 
-      this.onFullScreenHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenhide", function(sourceListener, args)
-      {
-        if (me.id === args[0]) {
-          sourceListener();
-        }
-      });
-
-      this.onFullScreenReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenready", function(sourceListener, args)
-      {
-        if (me.id === args[0]) {
-          sourceListener();
-        }
-      });
-
-      var signal = new Cocoon.Signal.createSignal();
-
-    signal.register("ready", this.onFullScreenReady);
-    signal.register("shown", this.onFullScreenShown);
-    signal.register("hidden", this.onFullScreenHidden);
-
-    this.on = signal.expose();
-
-  };
-
-  extension.Interstitial.prototype = {
-
-    showInterstitial : function()
+    extension.configure = function(parameters)
     {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        return Cocoon.callNative("IDTK_SRV_AD", "showFullScreen", [this.id], true);
-      }
-    },
-
-    refreshInterstitial : function()
-    {
-      if (Cocoon.Ad.nativeAvailable)
-      {
-        return Cocoon.callNative("IDTK_SRV_AD", "refreshFullScreen", [this.id], true);
-      }
-    }
-  };
-
-  extension.configure = function(parameters)
-  {
         if (typeof parameters === "undefined") {
             parameters = {};
         }
 
-    if (Cocoon.Ad.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_AD", "requestInitialization", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "requestInitialization", arguments, true);
+        }
+    };
 
-  extension.createBanner = function(parameters)
-  {
-    if (typeof parameters === "undefined") {
+    extension.createBanner = function(parameters)
+    {
+        if (typeof parameters === "undefined") {
             parameters = {};
         }
 
-    if (Cocoon.Ad.nativeAvailable)
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            var adId = Cocoon.callNative("IDTK_SRV_AD", "createBanner", [parameters]);
+            var banner = new extension.Banner(adId);
+
+            return banner;
+        }
+    };
+
+    extension.releaseBanner = function(banner)
     {
-      var adId = Cocoon.callNative("IDTK_SRV_AD", "createBanner", [parameters]);
-      var banner = new extension.Banner(adId);
-
-      return banner;
-    }
-  };
-
-  extension.releaseBanner = function(banner)
-  {
-    if (typeof banner === "undefined") {
+        if (typeof banner === "undefined") {
             throw "The banner ad object to be released is undefined"
         }
 
-    if (Cocoon.Ad.nativeAvailable)
-    {
-      Cocoon.callNative("IDTK_SRV_AD", "releaseBanner", [banner.id]);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            Cocoon.callNative("IDTK_SRV_AD", "releaseBanner", [banner.id]);
+        }
+    };
 
-  extension.createInterstitial = function(parameters)
-  {
-    if (typeof parameters === "undefined") {
+    extension.createInterstitial = function(parameters)
+    {
+        if (typeof parameters === "undefined") {
             parameters = {};
         }
 
-    if (Cocoon.Ad.nativeAvailable)
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            var adId = Cocoon.callNative("IDTK_SRV_AD", "createFullscreen", [parameters]);
+            var fullscreen = new Cocoon.Ad.Interstitial(adId);
+
+            return fullscreen;
+        }
+    };
+
+    extension.releaseInterstitial = function(fullscreen)
     {
-      var adId = Cocoon.callNative("IDTK_SRV_AD", "createFullscreen", [parameters]);
-      var fullscreen = new Cocoon.Ad.Interstitial(adId);
-
-      return fullscreen;
-    }
-  };
-
-  extension.releaseInterstitial = function(fullscreen)
-  {
-    if (!fullscreen) {
+        if (!fullscreen) {
             throw "The fullscreen ad object to be released is undefined"
         }
 
-    if (Cocoon.Ad.nativeAvailable)
-    {
-      Cocoon.callNative("IDTK_SRV_AD", "releaseFullscreen", [fullscreen.id]);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            Cocoon.callNative("IDTK_SRV_AD", "releaseFullscreen", [fullscreen.id]);
+        }
+    };
 
-  /**
+    /**
     * Shows a banner ad if available.
-  * @memberOf Cocoon.Ad
-  * @function showBanner
-  * @example
-  * Cocoon.Ad.showBanner();
-  */
-  extension.showBanner = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function showBanner
+    * @example
+    * Cocoon.Ad.showBanner();
+    */
+    extension.showBanner = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "showBanner", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "showBanner", arguments, true);
+        }
+    };
 
-  /**
+    /**
     * Hides the banner ad if it was being shown.
-  * @memberOf Cocoon.Ad
-  * @function hideBanner
-  * @example
-  * Cocoon.Ad.hideBanner();
-  */
-  extension.hideBanner = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function hideBanner
+    * @example
+    * Cocoon.Ad.hideBanner();
+    */
+    extension.hideBanner = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "hideBanner", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "hideBanner", arguments, true);
+        }
+    };
 
-  /**
+    /**
     * Loads a new banner ad.
-  * @memberOf Cocoon.Ad
-  * @function refreshBanner
-  * @private
-  * @example
-  * Cocoon.Ad.refreshBanner();
-  */
-  extension.refreshBanner = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function refreshBanner
+    * @private
+    * @example
+    * Cocoon.Ad.refreshBanner();
+    */
+    extension.refreshBanner = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "refreshBanner", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "refreshBanner", arguments, true);
+        }
+    };
 
-  /**
+    /**
     * Loads a new interstitial ad.
-  * @memberOf Cocoon.Ad
-  * @function showInterstitial
-  * @example
-  * Cocoon.Ad.showInterstitial();
-  */
-  extension.showInterstitial = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function showInterstitial
+    * @example
+    * Cocoon.Ad.showInterstitial();
+    */
+    extension.showInterstitial = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "showFullScreen", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "showFullScreen", arguments, true);
+        }
+    };
 
-  /**
+    /**
     * Shows a full screen ad if available.
-  * @memberOf Cocoon.Ad
-  * @function refreshInterstitial
-  * @private
-  * @example
-  * Cocoon.Ad.refreshInterstitial();
-  */
-  extension.refreshInterstitial = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function refreshInterstitial
+    * @private
+    * @example
+    * Cocoon.Ad.refreshInterstitial();
+    */
+    extension.refreshInterstitial = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "refreshFullScreen", arguments, true);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "refreshFullScreen", arguments, true);
+        }
+    };
 
-  /**
+    /**
     * Makes a request to preload a banner ad.
-  * @memberOf Cocoon.Ad
-  * @function loadBanner
-  * @example
-  * Cocoon.Ad.loadBanner();
-  */
-  extension.preloadedBanner = false;
-  extension.loadBanner = function()
-  {
-    if (Cocoon.Ad.nativeAvailable){
-      if (Cocoon.Ad.preloadedBanner) {
-        return Cocoon.Ad.refreshBanner();
-      }else{
-        Cocoon.Ad.preloadedBanner = true;
-        return Cocoon.callNative("IDTK_SRV_AD", "preloadBanner", arguments, true);
-      }
-    }
-  };
+    * @memberOf Cocoon.Ad
+    * @function loadBanner
+    * @example
+    * Cocoon.Ad.loadBanner();
+    */
+    extension.preloadedBanner = false;
+    extension.loadBanner = function()
+    {
+        if (Cocoon.Ad.nativeAvailable){
+            if (Cocoon.Ad.preloadedBanner) {
+                return Cocoon.Ad.refreshBanner();
+            }else{
+                Cocoon.Ad.preloadedBanner = true;
+                return Cocoon.callNative("IDTK_SRV_AD", "preloadBanner", arguments, true);
+            }
+        }
+    };
 
-  /**
+    /**
     * Makes a request to load a full screen ad (interstitial).
-  * @memberOf Cocoon.Ad
-  * @function loadInterstitial
-  * @example
-  * Cocoon.Ad.loadInterstitial();
-  */
-  extension.preloadedInterstitial = false;
-  extension.loadInterstitial = function()
-  {
-    if (Cocoon.Ad.nativeAvailable){
-      if (Cocoon.Ad.preloadedInterstitial) {
-        return Cocoon.Ad.refreshInterstitial();
-      }else{
-        Cocoon.Ad.preloadedInterstitial = true;
-        return Cocoon.callNative("IDTK_SRV_AD", "preloadFullScreen", arguments, true);
-      }
-    }
-  };
-
-  /**
-    * Sets the rectangle where the banner ad is going to be shown.
-  * @memberOf Cocoon.Ad
-  * @function setRectangle
-  * @private
-  * @param {Cocoon.Ad.Rectangle} rect The rectangle representing the banner position and domensions.
-  * @example
-  * Cocoon.Ad.setRectangle();
-  */
-  extension.setRectangle = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function loadInterstitial
+    * @example
+    * Cocoon.Ad.loadInterstitial();
+    */
+    extension.preloadedInterstitial = false;
+    extension.loadInterstitial = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "setRectangle", arguments);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable){
+            if (Cocoon.Ad.preloadedInterstitial) {
+                return Cocoon.Ad.refreshInterstitial();
+            }else{
+                Cocoon.Ad.preloadedInterstitial = true;
+                return Cocoon.callNative("IDTK_SRV_AD", "preloadFullScreen", arguments, true);
+            }
+        }
+    };
 
-  /**
+    /**
+    * Sets the rectangle where the banner ad is going to be shown.
+    * @memberOf Cocoon.Ad
+    * @function setRectangle
+    * @private
+    * @param {Cocoon.Ad.Rectangle} rect The rectangle representing the banner position and domensions.
+    * @example
+    * Cocoon.Ad.setRectangle();
+    */
+    extension.setRectangle = function()
+    {
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "setRectangle", arguments);
+        }
+    };
+
+    /**
     * Gets the rectangle representing the banner screen position.
-  * @memberOf Cocoon.Ad
-  * @private
-  * @function getRectangle
-  * @example
-  * Cocoon.Ad.getRectangle();
-  */
-  extension.getRectangle = function()
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @private
+    * @function getRectangle
+    * @example
+    * Cocoon.Ad.getRectangle();
+    */
+    extension.getRectangle = function()
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "getRectangle", arguments);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "getRectangle", arguments);
+        }
+    };
 
-  /**
+    /**
     * Sets the rectangle where the banner ad is going to be shown.
-  * @memberOf Cocoon.Ad
-  * @function setBannerLayout
-  * @param {Cocoon.Ad.BannerLayout} bannerLayout The layout where the bannerwill be placed.
-  * @example
-  * Cocoon.Ad.load();
-  */
-  extension.setBannerLayout = function(bannerLayout)
-  {
-    if (Cocoon.Ad.nativeAvailable)
+    * @memberOf Cocoon.Ad
+    * @function setBannerLayout
+    * @param {Cocoon.Ad.BannerLayout} bannerLayout The layout where the bannerwill be placed.
+    * @example
+    * Cocoon.Ad.load();
+    */
+    extension.setBannerLayout = function(bannerLayout)
     {
-      return Cocoon.callNative("IDTK_SRV_AD", "setBannerLayout", arguments);
-    }
-  };
+        if (Cocoon.Ad.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_AD", "setBannerLayout", arguments);
+        }
+    };
 
-  extension.onBannerShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannershow");
+    extension.onBannerShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannershow");
 
-  extension.onBannerHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerhide");
+    extension.onBannerHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerhide");
 
-  extension.onBannerReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerready");
+    extension.onBannerReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onbannerready");
 
-  extension.onFullScreenShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenshow");
+    extension.onFullScreenShown = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenshow");
 
-  extension.onFullScreenHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenhide");
+    extension.onFullScreenHidden = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenhide");
 
-  extension.onFullScreenReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenready");
+    extension.onFullScreenReady = new Cocoon.EventHandler("IDTK_SRV_AD", "Ad", "onfullscreenready");
 
-  var signal = new Cocoon.Signal.createSignal();
+    var signal = new Cocoon.Signal.createSignal();
 
-  /**
+    /**
      * Allows to listen to events called when a banner is ready.
      * @event On banner ready
      * @memberof Cocoon.Ad
@@ -3516,8 +3516,8 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("ready", extension.onBannerReady);
-  /**
+    signal.register("ready", extension.onBannerReady);
+    /**
      * Allows to listen to events called when a banner is shown.
      * @event On banner shown
      * @memberof Cocoon.Ad
@@ -3526,8 +3526,8 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("shown", extension.onBannerShown);
-  /**
+    signal.register("shown", extension.onBannerShown);
+    /**
      * Allows to listen to events called when a banner is hidden.
      * @event On banner hidden
      * @memberof Cocoon.Ad
@@ -3536,14 +3536,14 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("hidden", extension.onBannerHidden);
+    signal.register("hidden", extension.onBannerHidden);
 
-  extension.banner = {};
-  extension.banner.on = signal.expose();
+    extension.banner = {};
+    extension.banner.on = signal.expose();
 
-  var signal = new Cocoon.Signal.createSignal();
+    var signal = new Cocoon.Signal.createSignal();
 
-  /**
+    /**
      * Allows to listen to events called when a full screen ad is ready.
      * @event On interstitial ready
      * @memberof Cocoon.Ad
@@ -3552,8 +3552,8 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("ready", extension.onFullScreenReady);
-  /**
+    signal.register("ready", extension.onFullScreenReady);
+    /**
      * Allows to listen to events called when a full screen ad is shown.
      * @event On interstitial shown
      * @memberof Cocoon.Ad
@@ -3562,8 +3562,8 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("shown", extension.onFullScreenShown);
-  /**
+    signal.register("shown", extension.onFullScreenShown);
+    /**
      * Allows to listen to events called when a full screen ad is hidden.
      * @event On interstitial hidden
      * @memberof Cocoon.Ad
@@ -3572,295 +3572,295 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  ...
      * });
      */
-  signal.register("hidden", extension.onFullScreenHidden);
+    signal.register("hidden", extension.onFullScreenHidden);
 
-  extension.interstitial = {};
-  extension.interstitial.on = signal.expose();
+    extension.interstitial = {};
+    extension.interstitial.on = signal.expose();
 
-  return extension;
+    return extension;
 });;Cocoon.define("Cocoon.Store" , function(extension){
     "use strict";
 
     /**
     * This namespace represents the In-app purchases extension API.
     * <div class="alert alert-success">
-  *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Store-skeleton">Store-skeleton demo</a>.
-  *</div>
-  *
+    *   Here you will find a demo about this namespace: <a href="https://github.com/ludei/cocoonjs-demos/tree/master/Store-skeleton">Store-skeleton demo</a>.
+    *</div>
+    *
     * <div class="alert alert-warning">
-  *    <strong>Warning!</strong> This JavaScript extension requires some configuration parameters on the <a href="https://ludei.zendesk.com/hc/en-us">cloud compiler</a>!
-  * </div>
+    *    <strong>Warning!</strong> This JavaScript extension requires some configuration parameters on the <a href="https://ludei.zendesk.com/hc/en-us">cloud compiler</a>!
+    * </div>
     * @namespace Cocoon.Store
     * @example
     * // Basic usage, register callbacks first
-  * Cocoon.Store.on("purchase",{
-  *   started: function(){ ... },
-  *   success: function(purchaseInfo){ console.log( JSON.stringify(purchaseInfo) ) },
-  *   error: function(productId, err){ ... }
-  * });
+    * Cocoon.Store.on("purchase",{
+    *   started: function(){ ... },
+    *   success: function(purchaseInfo){ console.log( JSON.stringify(purchaseInfo) ) },
+    *   error: function(productId, err){ ... }
+    * });
     * Cocoon.Store.on("load",{
-  *   started: function(){ ... },
-  * success: function(products){
-    *   for (var i = 0; i < products.length; i++) {
-    *     Cocoon.Store.addProduct(products[i]);
-    *     console.log("Adding product to the local database: " + JSON.stringify(products[i]));
-    *   };
-    * },
-  *   error: function(errorMessage){ ... }
-  * });
-  * // Initialize store service
-  * Cocoon.Store.initialize({
-  *     sandbox: false,
-  *     managed: true
-  * });
-  * // Fetch the products from the store
-  * // The callbacks for this event are set in the Cocoon.Store.on("load"); event handler.
+    *   started: function(){ ... },
+    *   success: function(products){
+    *       for (var i = 0; i < products.length; i++) {
+    *           Cocoon.Store.addProduct(products[i]);
+    *           console.log("Adding product to the local database: " + JSON.stringify(products[i]));
+    *       };
+    *   },
+    *   error: function(errorMessage){ ... }
+    * });
+    * // Initialize store service
+    * Cocoon.Store.initialize({
+    *     sandbox: false,
+    *     managed: true
+    * });
+    * // Fetch the products from the store
+    * // The callbacks for this event are set in the Cocoon.Store.on("load"); event handler.
     * Cocoon.Store.loadProducts(["magic.sword", "health.potion"]);
     */
 
     extension.nativeAvailable = (!!Cocoon.nativeAvailable) && (!!window.ext.IDTK_SRV_STORE);
 
-  /**
-  * The object that represents the information of a product in the store.
-  * @memberof Cocoon.Store
-  * @name Cocoon.Store.ProductInfo
-  * @property {object} Cocoon.Store.ProductInfo - The object itself
-  * @property {string} Cocoon.Store.ProductInfo.productId The id of the product.
-  * @property {string} Cocoon.Store.ProductInfo.productAlias The alias of the product.
-  * @property {Cocoon.Store.ProductType} Cocoon.Store.ProductInfo.productType The product type.
-  * @property {string} Cocoon.Store.ProductInfo.title The title of the product.
-  * @property {string} Cocoon.Store.ProductInfo.description The description of the product.
-  * @property {string} Cocoon.Store.ProductInfo.price The price of the product.
-  * @property {string} Cocoon.Store.ProductInfo.localizedPrice The localized price of the product.
-  * @property {string} Cocoon.Store.ProductInfo.downloadURL The URL of the asset to be downloaded for this purchase.
-  */
-  extension.ProductInfo = {
-
-    productId : "productId",
-
-    productAlias : "productAlias",
-
-    productType : "productType",
-
-    title : "title",
-
-    description : "description",
-
-    price : "price",
-
-    localizedPrice : "localizedPrice",
-
-    downloadURL : "downloadURL"
-  };
-
-  /**
-  * The predefined possible states of product types.
-  * @memberof Cocoon.Store
-  * @name Cocoon.Store.ProductType
-  * @property {object} Cocoon.Store.ProductType - The object itself
-  * @property {string} Cocoon.Store.ProductType.CONSUMABLE A consumable product. See platform documentation for further information.
-  * @property {string} Cocoon.Store.ProductType.NON_CONSUMABLE See platform documentation for further information.
-  * @property {string} Cocoon.Store.ProductType.AUTO_RENEWABLE_SUBSCRIPTION An auto-renewable subscription. See platform documentation for further information.
-  * @property {string} Cocoon.Store.ProductType.FREE_SUBSCRIPTION A free subscription. See platform documentation for further information.
-  * @property {string} Cocoon.Store.ProductType.NON_RENEWABLE_SUBSCRIPTION A non-renewable subscription. See platform documentation for further information.
-  */
-  extension.ProductType =
-  {
-
-      CONSUMABLE : 0,
-
-      NON_CONSUMABLE : 1,
-
-      AUTO_RENEWABLE_SUBSCRIPTION : 2,
-
-      FREE_SUBSCRIPTION : 3,
-
-      NON_RENEWABLE_SUBSCRIPTION : 4
-  };
-
-  /**
-  * The predefined possible store types.
-  * @memberof Cocoon.Store
-  * @name Cocoon.Store.StoreType
-  * @property {object} Cocoon.Store.StoreType - The object itself
-  * @property {string} Cocoon.Store.StoreType.APP_STORE Apple AppStore.
-  * @property {string} Cocoon.Store.StoreType.PLAY_STORE Android Play Store.
-  * @property {string} Cocoon.Store.StoreType.MOCK_STORE Mock Store (Used for testing).
-  * @property {string} Cocoon.Store.StoreType.CHROME_STORE Chrome AppStore.
-  * @property {string} Cocoon.Store.StoreType.AMAZON_STORE Amazon AppStore.
-  * @property {string} Cocoon.Store.StoreType.NOOK_STORE Nook Store.
-  */
-  extension.StoreType =
-  {
-
-      APP_STORE : 0,
-
-      PLAY_STORE : 1,
-
-    MOCK_STORE : 2,
-
-      CHROME_STORE : 3,
-
-      AMAZON_STORE : 4,
-
-      NOOK_STORE : 5
-  };
-
-  /**
-  * The object that represents the information of a purchase.
-  * @memberof Cocoon.Store
-  * @name Cocoon.Store.PurchaseInfo
-  * @property {object} Cocoon.Store.PurchaseInfo - The object itself
-  * @property {string} Cocoon.Store.PurchaseInfo.transactionId The transaction id of a purchase.
-  * @property {string} Cocoon.Store.PurchaseInfo.purchaseTime The time when the purchase was done in seconds since 1970.
-  * @property {Cocoon.Store.PurchaseState} Cocoon.Store.PurchaseInfo.purchaseState The state of the purchase.
-  * @property {string} Cocoon.Store.PurchaseInfo.productId The product id related to this purchase.
-  * @property {string} Cocoon.Store.PurchaseInfo.quantity The number of products of the productId kind purchased in this transaction.
-  */
-  extension.PurchaseInfo = function(transactionId, purchaseTime, purchaseState, productId, quantity)
-  {
-
-    this.transactionId = transactionId;
-
-    this.purchaseTime = purchaseTime;
-
-    this.purchaseState = purchaseState;
-
-    this.productId = productId;
-
-    this.quantity = quantity;
-
-    return this;
-  };
-
-  /**
-    * The predefined possible states of a purchase.
-  * @memberof Cocoon.Store
-  * @name Cocoon.Store.PurchaseState
-  * @property {object} Cocoon.Store.PurchaseState - The object itself
-  * @property {string} Cocoon.Store.PurchaseState.PURCHASED The product has been successfully purchased. The transaction has ended successfully.
-  * @property {string} Cocoon.Store.PurchaseState.CANCELED The purchase has been canceled.
-  * @property {string} Cocoon.Store.PurchaseState.REFUNDED The purchase has been refunded.
-  * @property {string} Cocoon.Store.PurchaseState.EXPIRED The purchase (subscriptions only) has expired and is no longer valid.
+    /**
+    * The object that represents the information of a product in the store.
+    * @memberof Cocoon.Store
+    * @name Cocoon.Store.ProductInfo
+    * @property {object} Cocoon.Store.ProductInfo - The object itself
+    * @property {string} Cocoon.Store.ProductInfo.productId The id of the product.
+    * @property {string} Cocoon.Store.ProductInfo.productAlias The alias of the product.
+    * @property {Cocoon.Store.ProductType} Cocoon.Store.ProductInfo.productType The product type.
+    * @property {string} Cocoon.Store.ProductInfo.title The title of the product.
+    * @property {string} Cocoon.Store.ProductInfo.description The description of the product.
+    * @property {string} Cocoon.Store.ProductInfo.price The price of the product.
+    * @property {string} Cocoon.Store.ProductInfo.localizedPrice The localized price of the product.
+    * @property {string} Cocoon.Store.ProductInfo.downloadURL The URL of the asset to be downloaded for this purchase.
     */
-  extension.PurchaseState =
-  {
+    extension.ProductInfo = {
 
-      PURCHASED : 0,
+        productId : "productId",
 
-      CANCELED : 1,
+        productAlias : "productAlias",
 
-      REFUNDED : 2,
+        productType : "productType",
 
-      EXPIRED : 3
-  };
+        title : "title",
 
-  /**
-  * Gets the name of the native store implementation.
-  * @memberof Cocoon.Store
-  * @function getStoreType
-  * @returns {Cocoon.Store.StoreType} The store type.
-  * @example
-  * console.log(Cocoon.Store.getStoreType());
-  */
-  extension.getStoreType = function()
-  {
-    if (Cocoon.Store.nativeAvailable)
+        description : "description",
+
+        price : "price",
+
+        localizedPrice : "localizedPrice",
+
+        downloadURL : "downloadURL"
+    };
+
+    /**
+    * The predefined possible states of product types.
+    * @memberof Cocoon.Store
+    * @name Cocoon.Store.ProductType
+    * @property {object} Cocoon.Store.ProductType - The object itself
+    * @property {string} Cocoon.Store.ProductType.CONSUMABLE A consumable product. See platform documentation for further information.
+    * @property {string} Cocoon.Store.ProductType.NON_CONSUMABLE See platform documentation for further information.
+    * @property {string} Cocoon.Store.ProductType.AUTO_RENEWABLE_SUBSCRIPTION An auto-renewable subscription. See platform documentation for further information.
+    * @property {string} Cocoon.Store.ProductType.FREE_SUBSCRIPTION A free subscription. See platform documentation for further information.
+    * @property {string} Cocoon.Store.ProductType.NON_RENEWABLE_SUBSCRIPTION A non-renewable subscription. See platform documentation for further information.
+    */
+    extension.ProductType =
     {
-      return Cocoon.callNative("IDTK_SRV_STORE", "getStoreType", arguments);
-    }else{
-      return false;
-    }
-  };
 
-  /**
-  * Starts the Store Service. This will make the system to initialize the
-  * Store Service and probably Store callbacks will start to be received
-  * after calling this method. Because of this, you should have set your event handler
-  * before calling this method, so you don't lose any callback.
-  * @memberof Cocoon.Store
-  * @function initialize
-  * @example
-  * Cocoon.Store.initialize();
-  */
-  extension.initialize = function(params){
+        CONSUMABLE : 0,
 
-    params = params || {};
+        NON_CONSUMABLE : 1,
 
-    var properties = {
+        AUTO_RENEWABLE_SUBSCRIPTION : 2,
+
+        FREE_SUBSCRIPTION : 3,
+
+        NON_RENEWABLE_SUBSCRIPTION : 4
+    };
+
+    /**
+    * The predefined possible store types.
+    * @memberof Cocoon.Store
+    * @name Cocoon.Store.StoreType
+    * @property {object} Cocoon.Store.StoreType - The object itself
+    * @property {string} Cocoon.Store.StoreType.APP_STORE Apple AppStore.
+    * @property {string} Cocoon.Store.StoreType.PLAY_STORE Android Play Store.
+    * @property {string} Cocoon.Store.StoreType.MOCK_STORE Mock Store (Used for testing).
+    * @property {string} Cocoon.Store.StoreType.CHROME_STORE Chrome AppStore.
+    * @property {string} Cocoon.Store.StoreType.AMAZON_STORE Amazon AppStore.
+    * @property {string} Cocoon.Store.StoreType.NOOK_STORE Nook Store.
+    */
+    extension.StoreType =
+    {
+
+        APP_STORE : 0,
+
+        PLAY_STORE : 1,
+
+        MOCK_STORE : 2,
+
+        CHROME_STORE : 3,
+
+        AMAZON_STORE : 4,
+
+        NOOK_STORE : 5
+    };
+
+    /**
+    * The object that represents the information of a purchase.
+    * @memberof Cocoon.Store
+    * @name Cocoon.Store.PurchaseInfo
+    * @property {object} Cocoon.Store.PurchaseInfo - The object itself
+    * @property {string} Cocoon.Store.PurchaseInfo.transactionId The transaction id of a purchase.
+    * @property {string} Cocoon.Store.PurchaseInfo.purchaseTime The time when the purchase was done in seconds since 1970.
+    * @property {Cocoon.Store.PurchaseState} Cocoon.Store.PurchaseInfo.purchaseState The state of the purchase.
+    * @property {string} Cocoon.Store.PurchaseInfo.productId The product id related to this purchase.
+    * @property {string} Cocoon.Store.PurchaseInfo.quantity The number of products of the productId kind purchased in this transaction.
+    */
+    extension.PurchaseInfo = function(transactionId, purchaseTime, purchaseState, productId, quantity)
+    {
+
+        this.transactionId = transactionId;
+
+        this.purchaseTime = purchaseTime;
+
+        this.purchaseState = purchaseState;
+
+        this.productId = productId;
+
+        this.quantity = quantity;
+
+        return this;
+    };
+
+    /**
+    * The predefined possible states of a purchase.
+    * @memberof Cocoon.Store
+    * @name Cocoon.Store.PurchaseState
+    * @property {object} Cocoon.Store.PurchaseState - The object itself
+    * @property {string} Cocoon.Store.PurchaseState.PURCHASED The product has been successfully purchased. The transaction has ended successfully.
+    * @property {string} Cocoon.Store.PurchaseState.CANCELED The purchase has been canceled.
+    * @property {string} Cocoon.Store.PurchaseState.REFUNDED The purchase has been refunded.
+    * @property {string} Cocoon.Store.PurchaseState.EXPIRED The purchase (subscriptions only) has expired and is no longer valid.
+    */
+    extension.PurchaseState =
+    {
+
+        PURCHASED : 0,
+
+        CANCELED : 1,
+
+        REFUNDED : 2,
+
+        EXPIRED : 3
+    };
+
+    /**
+    * Gets the name of the native store implementation.
+    * @memberof Cocoon.Store
+    * @function getStoreType
+    * @returns {Cocoon.Store.StoreType} The store type.
+    * @example
+    * console.log(Cocoon.Store.getStoreType());
+    */
+    extension.getStoreType = function()
+    {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "getStoreType", arguments);
+        }else{
+            return false;
+        }
+    };
+
+    /**
+    * Starts the Store Service. This will make the system to initialize the
+    * Store Service and probably Store callbacks will start to be received
+    * after calling this method. Because of this, you should have set your event handler
+    * before calling this method, so you don't lose any callback.
+    * @memberof Cocoon.Store
+    * @function initialize
+    * @example
+    * Cocoon.Store.initialize();
+    */
+    extension.initialize = function(params){
+
+        params = params || {};
+
+        var properties = {
             sandbox : false,
             managed : true
         };
 
         var args = Cocoon.clone(properties,params);
 
-    Cocoon.Store.requestInitialization({
-      sandbox: args[0],
-      managed: args[1]
-    });
+        Cocoon.Store.requestInitialization({
+            sandbox: args[0],
+            managed: args[1]
+        });
 
-    Cocoon.Store.start();
-  }
+        Cocoon.Store.start();
+    }
 
-  /**
-  * @memberof Cocoon.Store
-  * @function requestInitialization
-  * @private
-  */
-  extension.requestInitialization = function(parameters) {
+    /**
+    * @memberof Cocoon.Store
+    * @function requestInitialization
+    * @private
+    */
+    extension.requestInitialization = function(parameters) {
         if (typeof parameters === "undefined")
         {
             parameters = {};
         }
         else
         {
-          if (parameters['managed'] !== undefined) parameters['remote'] = parameters['managed'];
-          if (parameters['sandbox'] !== undefined) parameters['debug'] = parameters['sandbox'];
+            if (parameters['managed'] !== undefined) parameters['remote'] = parameters['managed'];
+            if (parameters['sandbox'] !== undefined) parameters['debug'] = parameters['sandbox'];
         }
 
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "requestInitialization", arguments, true);
-    }
-  };
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "requestInitialization", arguments, true);
+        }
+    };
 
-  /**
-  * @memberof Cocoon.Store
-  * @function start
-  * @private
-  */
-  extension.start = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "start", arguments);
-    }
-  };
+    /**
+    * @memberof Cocoon.Store
+    * @function start
+    * @private
+    */
+    extension.start = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "start", arguments);
+        }
+    };
 
-  /**
-  * This method allows you to check is the  Store service is available in this platform.
-  * Not all iOS and Android devices will have the Store service
-  * available so you should check if it is before calling any other method.
-  * @memberof Cocoon.Store
-  * @function canPurchase
-  * @returns {boolean} True if the service is available and false otherwise.
-  */
-  extension.canPurchase = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "canPurchase", arguments);
-    }else{
-      return false;
-    }
-  };
+    /**
+    * This method allows you to check is the  Store service is available in this platform.
+    * Not all iOS and Android devices will have the Store service
+    * available so you should check if it is before calling any other method.
+    * @memberof Cocoon.Store
+    * @function canPurchase
+    * @returns {boolean} True if the service is available and false otherwise.
+    */
+    extension.canPurchase = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "canPurchase", arguments);
+        }else{
+            return false;
+        }
+    };
 
-  /**
-  * Fetches the products from the CocoonJS Cloud Compiling service store configuration.
-  * The request is monitored using the "load" signal events.
-  * @memberof Cocoon.Store
-  * @function fetchProductsFromServer
-  * @private
-  * @example
-  * // First register callbacks
+    /**
+    * Fetches the products from the CocoonJS Cloud Compiling service store configuration.
+    * The request is monitored using the "load" signal events.
+    * @memberof Cocoon.Store
+    * @function fetchProductsFromServer
+    * @private
+    * @example
+    * // First register callbacks
     * Cocoon.Store.on("load",{
     *   started: function(){ ... },
     *   success: function(products){ ... },
@@ -3868,21 +3868,21 @@ Cocoon.define("Cocoon.Widget" , function(extension){
     * });
     * // Then call the fetch method
     * Cocoon.Store.fetchProductsFromServer();
-  */
-  extension.fetchProductsFromServer = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "fetchProductsFromServer", arguments, true);
-    }
-  };
+    */
+    extension.fetchProductsFromServer = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "fetchProductsFromServer", arguments, true);
+        }
+    };
 
-  /**
-  * Fetches the products information from the Store.
-  * The request is monitored using the "load" signal events.
-  * @memberof Cocoon.Store
-  * @function loadProducts
-  * @example
-  * // First register callbacks
+    /**
+    * Fetches the products information from the Store.
+    * The request is monitored using the "load" signal events.
+    * @memberof Cocoon.Store
+    * @function loadProducts
+    * @example
+    * // First register callbacks
     * Cocoon.Store.on("load",{
     *   started: function(){ ... },
     *   success: function(products){ ... },
@@ -3890,322 +3890,322 @@ Cocoon.define("Cocoon.Widget" , function(extension){
     * });
     * // Then call the fetch method
     * Cocoon.Store.loadProducts(["magic.sword", "health.potion"]);
-  */
-  extension.loadProducts = function(productIds) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "fetchProductsFromStore", arguments, true);
-    }
-  };
+    */
+    extension.loadProducts = function(productIds) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "fetchProductsFromStore", arguments, true);
+        }
+    };
 
-  /**
-  * Finishes a purchase transaction and removes the transaction from the transaction queue.
-  * This method must be called after a purchase finishes successfully and the "success"
-  * event inside of the "on purchase products" callback has been received.
-  * If the purchase includes some asset to download from an external server this method must be called after the asset has been successfully downloaded.
-  * If you do not finish the transaction because the asset has not been correctly downloaded the {@link Cocoon.Store.onProductPurchaseStarted} method will be called again later on.
-  * @memberof Cocoon.Store
-  * @function finish
-  * @param {string} transactionId The transactionId of the purchase to finish.
-  */
-  extension.finish = function(transactionId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "finishPurchase", arguments, true);
-    }
-  };
+    /**
+    * Finishes a purchase transaction and removes the transaction from the transaction queue.
+    * This method must be called after a purchase finishes successfully and the "success"
+    * event inside of the "on purchase products" callback has been received.
+    * If the purchase includes some asset to download from an external server this method must be called after the asset has been successfully downloaded.
+    * If you do not finish the transaction because the asset has not been correctly downloaded the {@link Cocoon.Store.onProductPurchaseStarted} method will be called again later on.
+    * @memberof Cocoon.Store
+    * @function finish
+    * @param {string} transactionId The transactionId of the purchase to finish.
+    */
+    extension.finish = function(transactionId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "finishPurchase", arguments, true);
+        }
+    };
 
-  /**
-  * Consumes a purchase. This makes that product to be purchasable again.
-  * @memberof Cocoon.Store
-  * @function consume
-  * @param {string} transactionId The transaction Id of the purchase to consume.
-  * @param {string} productId The product Id of the product to be consumed.
-  * @example
+    /**
+    * Consumes a purchase. This makes that product to be purchasable again.
+    * @memberof Cocoon.Store
+    * @function consume
+    * @param {string} transactionId The transaction Id of the purchase to consume.
+    * @param {string} productId The product Id of the product to be consumed.
+    * @example
     * Cocoon.Store.on("consume",{
     *   started: function(transactionId){ ... },
     *   success: function(transactionId){ ... },
     *   error: function(transactionId, err){ ... }
     * });
-  * Cocoon.Store.consume("magic.sword");
-  */
-  extension.consume = function(transactionId, productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "consumePurchase", arguments, true);
-    }
-  };
+    * Cocoon.Store.consume("magic.sword");
+    */
+    extension.consume = function(transactionId, productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "consumePurchase", arguments, true);
+        }
+    };
 
-  /**
-  * Requests a product purchase given it's product id.
-  * @memberof Cocoon.Store
-  * @function purchase
-  * @param {string} productId The id or alias of the product to be purchased.
-  * @example
+    /**
+    * Requests a product purchase given it's product id.
+    * @memberof Cocoon.Store
+    * @function purchase
+    * @param {string} productId The id or alias of the product to be purchased.
+    * @example
     * Cocoon.Store.on("purchase",{
     *   started: function(productId){ ... },
     *   success: function(purchaseInfo){ ... },
     *   verification: function(productId,data){ ... }, // This callback will be fired only when using "unmanaged" mode
     *   error: function(productId, err){ ... }
     * });
-  * Cocoon.Store.purchase("magic.sword");
-  */
-  extension.purchase = function(productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeature", arguments, true);
-    }
-  };
+    * Cocoon.Store.purchase("magic.sword");
+    */
+    extension.purchase = function(productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeature", arguments, true);
+        }
+    };
 
-  /**
-  * Requests a product purchase given it's product id showing a modal progress dialog.
-  * @memberof Cocoon.Store
-  * @function puchaseProductModal
-  * @param {string} productId The id or alias of the product to be purchased.
-  * @private
-  * @example
+    /**
+    * Requests a product purchase given it's product id showing a modal progress dialog.
+    * @memberof Cocoon.Store
+    * @function puchaseProductModal
+    * @param {string} productId The id or alias of the product to be purchased.
+    * @private
+    * @example
     * Cocoon.Store.on("purchase",{
     *   started: function(productId){ ... },
     *   success: function(purchaseInfo){ ... },
     *   verification: function(productId,data){ ... }, // This callback will be fired only when using "unmanaged" mode
     *   error: function(productId, err){ ... }
     * });
-  * Cocoon.Store.puchaseProductModal("magic.sword");
-  */
-  extension.puchaseProductModal = function(productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeatureModal", arguments, true);
-    }
-  };
+    * Cocoon.Store.puchaseProductModal("magic.sword");
+    */
+    extension.puchaseProductModal = function(productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeatureModal", arguments, true);
+        }
+    };
 
-  /**
-  * Requests a product purchase given it's product id showing a modal progress dialog.
-  * @memberof Cocoon.Store
-  * @function purchaseProductModalWithPreview
-  * @param {string} productId The id or alias of the product to be purchased.
-  * @private
-  * @example
+    /**
+    * Requests a product purchase given it's product id showing a modal progress dialog.
+    * @memberof Cocoon.Store
+    * @function purchaseProductModalWithPreview
+    * @param {string} productId The id or alias of the product to be purchased.
+    * @private
+    * @example
     * Cocoon.Store.on("purchase",{
     *   started: function(productId){ ... },
     *   success: function(purchaseInfo){ ... },
     *   verification: function(productId,data){ ... }, // This callback will be fired only when using "unmanaged" mode
     *   error: function(productId, err){ ... }
     * });
-  * Cocoon.Store.purchaseProductModalWithPreview("magic.sword");
-  */
-  extension.purchaseProductModalWithPreview = function(productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeatureModalWithPreview", arguments, true);
-    }
-  };
+    * Cocoon.Store.purchaseProductModalWithPreview("magic.sword");
+    */
+    extension.purchaseProductModalWithPreview = function(productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "purchaseFeatureModalWithPreview", arguments, true);
+        }
+    };
 
-  /**
-  * Returns if a product has been already purchased or not.
-  * @memberof Cocoon.Store
-  * @function isProductPurchased
-  * @param {string} productId The product id or alias of the product to be checked.
-  * @returns {boolean} A boolean that indicates whether the product has been already purchased.
-  */
-  extension.isProductPurchased = function(productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "isFeaturePurchased", arguments);
-    }
-  };
+    /**
+    * Returns if a product has been already purchased or not.
+    * @memberof Cocoon.Store
+    * @function isProductPurchased
+    * @param {string} productId The product id or alias of the product to be checked.
+    * @returns {boolean} A boolean that indicates whether the product has been already purchased.
+    */
+    extension.isProductPurchased = function(productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "isFeaturePurchased", arguments);
+        }
+    };
 
-  /**
-  * Restores all the purchases from the platform's market.
-  * For each already purchased product the event "restore" will be called.
-  * @memberof Cocoon.Store
-  * @function restore
-  * @example
+    /**
+    * Restores all the purchases from the platform's market.
+    * For each already purchased product the event "restore" will be called.
+    * @memberof Cocoon.Store
+    * @function restore
+    * @example
     * Cocoon.Store.on("restore",{
     *   started: function(){ ... },
     *   success: function(){ ... },
     *   error: function(errorMessage){ ... }
     * });
-  * Cocoon.Store.restore();
-  */
-  extension.restore = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "restorePurchases", arguments, true);
-    }
-  };
+    * Cocoon.Store.restore();
+    */
+    extension.restore = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "restorePurchases", arguments, true);
+        }
+    };
 
-  /**
-  * @memberof Cocoon.Store
-  * @private
-  * @function restore
-  * @example
+    /**
+    * @memberof Cocoon.Store
+    * @private
+    * @function restore
+    * @example
     * Cocoon.Store.on("restore",{
     *   started: function(){ ... },
     *   success: function(){ ... },
     *   error: function(errorMessage){ ... }
     * });
-  * Cocoon.Store.restorePurchasesModal();
-  */
-  extension.restorePurchasesModal = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-    return Cocoon.callNative("IDTK_SRV_STORE", "restorePurchasesModal", arguments, true);
-    }
-  };
+    * Cocoon.Store.restorePurchasesModal();
+    */
+    extension.restorePurchasesModal = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+        return Cocoon.callNative("IDTK_SRV_STORE", "restorePurchasesModal", arguments, true);
+        }
+    };
 
-  /**
-  * Returns all the locally stored products.
-  * @memberof Cocoon.Store
-  * @function getProducts
-  * @returns {Cocoon.Store.ProductInfo} An array with all the objects available for purchase.
-  */
-  extension.getProducts = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "getProducts", arguments);
-    }
-  };
+    /**
+    * Returns all the locally stored products.
+    * @memberof Cocoon.Store
+    * @function getProducts
+    * @returns {Cocoon.Store.ProductInfo} An array with all the objects available for purchase.
+    */
+    extension.getProducts = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "getProducts", arguments);
+        }
+    };
 
-  /**
-  * Adds a product to the products local DB.
-  * @memberof Cocoon.Store
-  * @function addProduct
-  * @param {Cocoon.Store.ProductInfo} product The product to be added to the local products DB.
-  */
-  extension.addProduct = function(product) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "addProduct", arguments);
-    }
-  };
+    /**
+    * Adds a product to the products local DB.
+    * @memberof Cocoon.Store
+    * @function addProduct
+    * @param {Cocoon.Store.ProductInfo} product The product to be added to the local products DB.
+    */
+    extension.addProduct = function(product) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "addProduct", arguments);
+        }
+    };
 
-  /**
-  * Removes a product from the products local DB given its productId.
-  * @memberof Cocoon.Store
-  * @function removeProduct
-  * @param {string} productId The product or alias of the product to be removed from the local products DB.
-  */
-  extension.removeProduct = function(productId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "removeProduct", arguments);
-    }
-  };
+    /**
+    * Removes a product from the products local DB given its productId.
+    * @memberof Cocoon.Store
+    * @function removeProduct
+    * @param {string} productId The product or alias of the product to be removed from the local products DB.
+    */
+    extension.removeProduct = function(productId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "removeProduct", arguments);
+        }
+    };
 
-  /**
-  * Returns all the locally stored purchases.
-  * @memberof Cocoon.Store
-  * @function getPurchases
-  * @returns {Cocoon.Store.PurchaseInfo} An array with all the completed purchases.
-  */
-  extension.getPurchases = function() {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "getPurchases", arguments);
-    }
-  };
+    /**
+    * Returns all the locally stored purchases.
+    * @memberof Cocoon.Store
+    * @function getPurchases
+    * @returns {Cocoon.Store.PurchaseInfo} An array with all the completed purchases.
+    */
+    extension.getPurchases = function() {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "getPurchases", arguments);
+        }
+    };
 
-  /**
-  * Adds a purchase to the local purchases DB.
-  * @memberof Cocoon.Store
-  * @function addPurchase
-  * @param {Cocoon.Store.PurchaseInfo} purchase The purchase to be added.
-  */
-  extension.addPurchase = function(purchase) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "addPurchase", arguments);
-    }
-  };
+    /**
+    * Adds a purchase to the local purchases DB.
+    * @memberof Cocoon.Store
+    * @function addPurchase
+    * @param {Cocoon.Store.PurchaseInfo} purchase The purchase to be added.
+    */
+    extension.addPurchase = function(purchase) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "addPurchase", arguments);
+        }
+    };
 
-  /**
-  * Removes a purchase from the local purchases DB given it's transaction id.
-  * @memberof Cocoon.Store
-  * @function removePurchase
-  * @param {string} transactionId The id of the transaction to be removed.
-  */
-  extension.removePurchase = function(transactionId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "removePurchase", arguments);
-    }
-  };
+    /**
+    * Removes a purchase from the local purchases DB given it's transaction id.
+    * @memberof Cocoon.Store
+    * @function removePurchase
+    * @param {string} transactionId The id of the transaction to be removed.
+    */
+    extension.removePurchase = function(transactionId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "removePurchase", arguments);
+        }
+    };
 
-  /**
-  * (TESTING ONLY) Simulate a purchase cancel.
-  * This method is not allowed in production services and will only work in Mocks.
-  * @private
-  * @memberof Cocoon.Store
-  * @function cancelPurchase
-  * @param {string} transactionId The transactionId of the purchase to be canceled.
-  */
-  extension.cancelPurchase = function(transactionId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "cancelPurchase", arguments);
-    }
-  };
+    /**
+    * (TESTING ONLY) Simulate a purchase cancel.
+    * This method is not allowed in production services and will only work in Mocks.
+    * @private
+    * @memberof Cocoon.Store
+    * @function cancelPurchase
+    * @param {string} transactionId The transactionId of the purchase to be canceled.
+    */
+    extension.cancelPurchase = function(transactionId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "cancelPurchase", arguments);
+        }
+    };
 
-  /**
-  * (TESTING ONLY) Simulates a purchase refundment.
-  * This method is not allowed in production services and will only work in Mocks.
-  * @private
-  * @memberof Cocoon.Store
-  * @function refundPurchase
-  * @param {string} transactionId The transactionId of the purchase to be refunded.
-  */
-  extension.refundPurchase = function(transactionId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "refundPurchase", arguments);
-    }
-  };
+    /**
+    * (TESTING ONLY) Simulates a purchase refundment.
+    * This method is not allowed in production services and will only work in Mocks.
+    * @private
+    * @memberof Cocoon.Store
+    * @function refundPurchase
+    * @param {string} transactionId The transactionId of the purchase to be refunded.
+    */
+    extension.refundPurchase = function(transactionId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "refundPurchase", arguments);
+        }
+    };
 
-  /**
-  * (TESTING ONLY) Simulates a purchase expiration.
-  * This method is not allowed in production services and will only work in Mocks.
-  * @private
-  * @memberof Cocoon.Store
-  * @function expirePurchase
-  * @param {string} transactionId The transactionId of the purchase to be expired.
-  */
-  extension.expirePurchase = function(transactionId) {
-    if (Cocoon.Store.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_STORE", "expirePurchase", arguments);
-    }
-  };
+    /**
+    * (TESTING ONLY) Simulates a purchase expiration.
+    * This method is not allowed in production services and will only work in Mocks.
+    * @private
+    * @memberof Cocoon.Store
+    * @function expirePurchase
+    * @param {string} transactionId The transactionId of the purchase to be expired.
+    */
+    extension.expirePurchase = function(transactionId) {
+        if (Cocoon.Store.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_STORE", "expirePurchase", arguments);
+        }
+    };
 
-  extension.onProductsFetchStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchStarted");
+    extension.onProductsFetchStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchStarted");
 
-  extension.onProductsFetchCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchCompleted");
+    extension.onProductsFetchCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchCompleted");
 
-  extension.onProductsFetchFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchFailed");
+    extension.onProductsFetchFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductsFetchFailed");
 
-  extension.onProductPurchaseStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseStarted");
+    extension.onProductPurchaseStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseStarted");
 
-  extension.onProductPurchaseVerificationRequestReceived = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseVerificationRequestReceived");
+    extension.onProductPurchaseVerificationRequestReceived = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseVerificationRequestReceived");
 
-  extension.onProductPurchaseCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseCompleted");
+    extension.onProductPurchaseCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseCompleted");
 
-  extension.onProductPurchaseFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseFailed");
+    extension.onProductPurchaseFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onProductPurchaseFailed");
 
-  extension.onRestorePurchasesStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesStarted");
+    extension.onRestorePurchasesStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesStarted");
 
-  extension.onRestorePurchasesCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesCompleted");
+    extension.onRestorePurchasesCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesCompleted");
 
-  extension.onRestorePurchasesFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesFailed");
+    extension.onRestorePurchasesFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onRestorePurchasesFailed");
 
-  extension.onConsumePurchaseStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseStarted");
+    extension.onConsumePurchaseStarted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseStarted");
 
-  extension.onConsumePurchaseCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseCompleted");
+    extension.onConsumePurchaseCompleted = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseCompleted");
 
-  extension.onConsumePurchaseFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseFailed");
+    extension.onConsumePurchaseFailed = new Cocoon.EventHandler("IDTK_SRV_STORE", "Store", "onConsumePurchaseFailed");
 
-  var signal = new Cocoon.Signal.createSignal();
+    var signal = new Cocoon.Signal.createSignal();
 
-  /**
+    /**
      * Allows to listen to events about the loading process.
      * - The callback 'started' receives no parameters when the products fetch has started.
      * - The callback 'success' receives a parameter with the valid products array when the products fetch has completed.
@@ -4219,19 +4219,19 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  error: function(errorMessage){ ... }
      * });
      */
-  signal.register("load", {
-    started : extension.onProductsFetchStarted,
-    success : extension.onProductsFetchCompleted,
-    error : extension.onProductsFetchFailed
-  });
+    signal.register("load", {
+        started : extension.onProductsFetchStarted,
+        success : extension.onProductsFetchCompleted,
+        error : extension.onProductsFetchFailed
+    });
 
-  /**
+    /**
      * Allows to listen to events about the purchasing process.
      * - The callback 'started' receives a parameters with the product id of the product being purchased when the purchase of a product starts.
-   * - The callback 'success' receives as parameter the information of the purchase {@link Cocoon.Store.PurchaseInfo} when the purchase of a product succeeds.
+     * - The callback 'success' receives as parameter the information of the purchase {@link Cocoon.Store.PurchaseInfo} when the purchase of a product succeeds.
      * - The callback 'verification' receives two parameters, one with the productId of the purchased product and another one with a JSON object containing the data to be verified when a request for purchase verification has been received from the Store.
      * In Android this JSON object will containt two keys: signedData and signature. You will need that information to verify the purchase against the backend server.
-   * - The callback 'error' receives a parameters with the product id and an error message when the purchase of a product fails.
+     * - The callback 'error' receives a parameters with the product id and an error message when the purchase of a product fails.
      * @event On purchase products callbacks
      * @memberof Cocoon.Store
      * @example
@@ -4242,14 +4242,14 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  error: function(productId, err){ ... }
      * });
      */
-  signal.register("purchase", {
-    started : extension.onProductPurchaseStarted,
-    success : extension.onProductPurchaseCompleted,
-    verification : extension.onProductPurchaseVerificationRequestReceived,
-    error : extension.onProductPurchaseFailed
-  });
+    signal.register("purchase", {
+        started : extension.onProductPurchaseStarted,
+        success : extension.onProductPurchaseCompleted,
+        verification : extension.onProductPurchaseVerificationRequestReceived,
+        error : extension.onProductPurchaseFailed
+    });
 
-  /**
+    /**
      * Allows to listen to events about the consuming process.
      * - The callback 'started' receives a parameters with the transaction id of the purchase being consumed when the consume purchase operation has started.
      * - The callback 'success' receives a parameters with the transaction id of the consumed purchase when the consume purchase operation has completed.
@@ -4263,13 +4263,13 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  error: function(transactionId, err){ ... }
      * });
      */
-  signal.register("consume", {
-    started : extension.onConsumePurchaseStarted,
-    success : extension.onConsumePurchaseCompleted,
-    error : extension.onConsumePurchaseFailed
-  });
+    signal.register("consume", {
+        started : extension.onConsumePurchaseStarted,
+        success : extension.onConsumePurchaseCompleted,
+        error : extension.onConsumePurchaseFailed
+    });
 
-  /**
+    /**
      * Allows to listen to events about the restoring process.
      * - The callback 'started' receives no parameters when the restore purchases operation has started.
      * - The callback 'success' receives no parameters when the restore purchases operation has completed.
@@ -4283,15 +4283,15 @@ Cocoon.define("Cocoon.Widget" , function(extension){
      *  error: function(errorMessage){ ... }
      * });
      */
-  signal.register("restore", {
-    started : extension.onRestorePurchasesStarted,
-    success : extension.onRestorePurchasesCompleted,
-    error : extension.onRestorePurchasesFailed
-  });
+    signal.register("restore", {
+        started : extension.onRestorePurchasesStarted,
+        success : extension.onRestorePurchasesCompleted,
+        error : extension.onRestorePurchasesFailed
+    });
 
-  extension.on = signal.expose();
+    extension.on = signal.expose();
 
-  return extension;
+    return extension;
 });;/**
  * This namespace represents the Cocoon Notification extension.
  * The following image illustrates how the notification would look like when it arrives to your device.
@@ -4310,404 +4310,404 @@ Cocoon.define("Cocoon.Notification" , function(extension){
     extension.nativeAvailable = (!!window.ext) && (!!window.ext.IDTK_SRV_NOTIFICATION);
 
     /**
-   * This namespace represents the Cocoon Notification extension for local notifications.
-   * @namespace Cocoon.Notification.Local
-   * @example
-   * Cocoon.Notification.Local.on("notification", {
-   *   received: function(userData){
+     * This namespace represents the Cocoon Notification extension for local notifications.
+     * @namespace Cocoon.Notification.Local
+     * @example
+     * Cocoon.Notification.Local.on("notification", {
+     *   received: function(userData){
      *        console.log("A local notification has been received: " + JSON.stringify(userData));
      *   }
-   * });
-   *
-   * var notificationConfig = {
-   *  message : "Hi, I am a notification",
-   *  soundEnabled : true,
-   *  badgeNumber : 0,
-   *  userData : {"key1" : "value1", "key2": "value2"},
-   *  contentBody : "",
-   *  contentTitle : "",
-   *  date : new Date().valueOf() + 1000
-   * };
-   *
-   * var localNotification = Cocoon.Notification.Local.create(notificationConfig);
-   *
-   * Cocoon.Notification.Local.send(localNotification);
-   * Cocoon.Notification.start();
-   */
+     * });
+     *
+     * var notificationConfig = {
+     *  message : "Hi, I am a notification",
+     *  soundEnabled : true,
+     *  badgeNumber : 0,
+     *  userData : {"key1" : "value1", "key2": "value2"},
+     *  contentBody : "",
+     *  contentTitle : "",
+     *  date : new Date().valueOf() + 1000
+     * };
+     *
+     * var localNotification = Cocoon.Notification.Local.create(notificationConfig);
+     *
+     * Cocoon.Notification.Local.send(localNotification);
+     * Cocoon.Notification.start();
+     */
     extension.Local = {};
     /**
-   * This namespace represents the Cocoon Notification extension for push notifications.
-   * @namespace Cocoon.Notification.Push
-   */
+     * This namespace represents the Cocoon Notification extension for push notifications.
+     * @namespace Cocoon.Notification.Push
+     */
     extension.Push = {};
 
     /**
-  * Returns an object that represents the information of a local notification.
-  * @memberOf Cocoon.Notification.Local
-  * @function create
-  * @example
-  * var notificationConfig = {
-  * message : "Hi, I am a notification",
-  * soundEnabled : true,
-  * badgeNumber : 0,
-  * userData : {"key1" : "value1", "key2": "value2"},
-  * contentBody : "",
-  * contentTitle : "",
-  * date : new Date().valueOf() + 5000 // It will be fired in 5 seconds.
-  * };
-  *
-  * var localNotification = Cocoon.Notification.Local.create(notificationConfig);
+    * Returns an object that represents the information of a local notification.
+    * @memberOf Cocoon.Notification.Local
+    * @function create
+    * @example
+    * var notificationConfig = {
+    *   message : "Hi, I am a notification",
+    *   soundEnabled : true,
+    *   badgeNumber : 0,
+    *   userData : {"key1" : "value1", "key2": "value2"},
+    *   contentBody : "",
+    *   contentTitle : "",
+    *   date : new Date().valueOf() + 5000 // It will be fired in 5 seconds.
+    * };
+    *
+    * var localNotification = Cocoon.Notification.Local.create(notificationConfig);
     * @param {object}   params - The object itself
-  * @param {string}   params.message The notification message. By default, it will be empty.
-  * @param {boolean}  params.soundEnabled A flag that indicates if the sound should be enabled for the notification. By default, it will be true.
-  * @param {number}   params.badgeNumber The number that will appear in the badge of the application icon in the home screen. By default, it will be 0.
-  * @param {object}   params.userData The JSON data to attached to the notification. By default, it will be empty.
-  * @param {string}   params.contentBody The body content to be showed in the expanded notification information. By default, it will be empty.
-  * @param {string}   params.contentTitle The title to be showed in the expanded notification information. By default, it will be empty.
-  * @param {number}   params.date Time in millisecs from 1970 when the notification will be fired. By default, it will be 1 second (1000).
+    * @param {string}   params.message The notification message. By default, it will be empty.
+    * @param {boolean}  params.soundEnabled A flag that indicates if the sound should be enabled for the notification. By default, it will be true.
+    * @param {number}   params.badgeNumber The number that will appear in the badge of the application icon in the home screen. By default, it will be 0.
+    * @param {object}   params.userData The JSON data to attached to the notification. By default, it will be empty.
+    * @param {string}   params.contentBody The body content to be showed in the expanded notification information. By default, it will be empty.
+    * @param {string}   params.contentTitle The title to be showed in the expanded notification information. By default, it will be empty.
+    * @param {number}   params.date Time in millisecs from 1970 when the notification will be fired. By default, it will be 1 second (1000).
     */
-  extension.Local.create = function(params)
-  {
-    var properties = {
-      message : "",
-      soundEnabled : true,
-      badgeNumber : 0,
-      userData : {},
-      contentBody : "",
-      contentTitle : "",
-      date : new Date().valueOf() + 1000
+    extension.Local.create = function(params)
+    {
+        var properties = {
+            message : "",
+            soundEnabled : true,
+            badgeNumber : 0,
+            userData : {},
+            contentBody : "",
+            contentTitle : "",
+            date : new Date().valueOf() + 1000
+        };
+
+        var args = Cocoon.clone(properties,params);
+
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "createLocalNotification", args);
+        }
     };
 
-    var args = Cocoon.clone(properties,params);
-
-    if (Cocoon.Notification.nativeAvailable)
-    {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "createLocalNotification", args);
-    }
-  };
-
-  /**
-  * Returns an object structure that represents the information of a push notification.
-  * @memberOf Cocoon.Notification.Push
-  * @function create
-  * @example
-  * var notificationConfig = {
-  * message : "Hi, I am a notification",
-  * soundEnabled : true,
-  * badgeNumber : 0,
-  * userData : {"key1" : "value1", "key2": "value2"},
-  * channels : "",
-  * expirationTime : new Date().valueOf() +  3600, // The notification will be no longer valid in a hour.
-  * expirationTimeInterval :  3600 // The notification will be no longer valid in a hour.
-  * };
-  *
-  * var pushNotification = Cocoon.Notification.Push.create(notificationConfig);
+    /**
+    * Returns an object structure that represents the information of a push notification.
+    * @memberOf Cocoon.Notification.Push
+    * @function create
+    * @example
+    * var notificationConfig = {
+    *   message : "Hi, I am a notification",
+    *   soundEnabled : true,
+    *   badgeNumber : 0,
+    *   userData : {"key1" : "value1", "key2": "value2"},
+    *   channels : "",
+    *   expirationTime : new Date().valueOf() +  3600, // The notification will be no longer valid in a hour.
+    *   expirationTimeInterval :  3600 // The notification will be no longer valid in a hour.
+    * };
+    *
+    * var pushNotification = Cocoon.Notification.Push.create(notificationConfig);
     * @param {object}   params - The object itself
-  * @param {string}   params.message The notification message. By default, it will be empty.
-  * @param {boolean}  params.soundEnabled A flag that indicates if the sound should be enabled for the notification. By default, it will be true.
-  * @param {number}   params.badgeNumber The number that will appear in the badge of the application icon in the home screen.By default, it will be 0.
-  * @param {object}   params.userData The JSON data to attached to the notification. By default, it will be empty.
-  * @param {array}  params.channels An array containing the channels names this notification will be delivered to. By default, it will be empty.
-  * @param {number}   params.expirationTime A time in seconds from 1970 when the notification is no longer valid and will not be delivered in case it has not already been delivered. By default, it will be 0.
-  * @param {number}   params.expirationTimeInterval An incremental ammount of time in from now when the notification is no longer valid and will not be delivered in case it has not already been delivered. By default, it will be 0.
+    * @param {string}   params.message The notification message. By default, it will be empty.
+    * @param {boolean}  params.soundEnabled A flag that indicates if the sound should be enabled for the notification. By default, it will be true.
+    * @param {number}   params.badgeNumber The number that will appear in the badge of the application icon in the home screen.By default, it will be 0.
+    * @param {object}   params.userData The JSON data to attached to the notification. By default, it will be empty.
+    * @param {array}    params.channels An array containing the channels names this notification will be delivered to. By default, it will be empty.
+    * @param {number}   params.expirationTime A time in seconds from 1970 when the notification is no longer valid and will not be delivered in case it has not already been delivered. By default, it will be 0.
+    * @param {number}   params.expirationTimeInterval An incremental ammount of time in from now when the notification is no longer valid and will not be delivered in case it has not already been delivered. By default, it will be 0.
     */
-  extension.Push.create = function(params)
-  {
-    var properties = {
-    message : "",
-    soundEnabled : true,
-    badgeNumber : 0,
-    userData : {},
-    channels : [],
-    expirationTime : 0,
-    expirationTimeInterval : 0
+    extension.Push.create = function(params)
+    {
+        var properties = {
+        message : "",
+        soundEnabled : true,
+        badgeNumber : 0,
+        userData : {},
+        channels : [],
+        expirationTime : 0,
+        expirationTimeInterval : 0
+        };
+
+        for (var prop in properties) {
+            if (!params[prop]) {
+                params[prop] = properties[prop];
+            }
+        }
+
+        return params;
     };
 
-    for (var prop in properties) {
-      if (!params[prop]) {
-        params[prop] = properties[prop];
-      }
-    }
-
-    return params;
-  };
-
-  /**
-  * Starts processing received notifications. The user must call this method when the game is ready to process notifications. Notifications received before being prepared are stored and processed later.
-  * @memberOf Cocoon.Notification
-  * @function start
+    /**
+    * Starts processing received notifications. The user must call this method when the game is ready to process notifications. Notifications received before being prepared are stored and processed later.
+    * @memberOf Cocoon.Notification
+    * @function start
     */
-  extension.start = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.start = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "start", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "start", arguments);
+        }
+    };
 
-  /**
-  * Registers to be able to receive push notifications.
-  * @memberOf Cocoon.Notification.Push
-  * @function register
+    /**
+    * Registers to be able to receive push notifications.
+    * @memberOf Cocoon.Notification.Push
+    * @function register
     */
-  extension.Push.register = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Push.register = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "registerForPushNotifications", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "registerForPushNotifications", arguments, true);
+        }
+    };
 
-  /**
-  * Unregisters from receiving push notifications.
-  * @memberOf Cocoon.Notification.Push
-  * @function unregister
+    /**
+    * Unregisters from receiving push notifications.
+    * @memberOf Cocoon.Notification.Push
+    * @function unregister
     */
-  extension.Push.unregister = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Push.unregister = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "unregisterForPushNotifications", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "unregisterForPushNotifications", arguments, true);
+        }
+    };
 
-  /**
-  * Cancels the local notification with Id provided.
-  * The last sent local notification will be remove from the notifications bar.
-  * @memberOf Cocoon.Notification.Local
-  * @function cancel
+    /**
+    * Cancels the local notification with Id provided.
+    * The last sent local notification will be remove from the notifications bar.
+    * @memberOf Cocoon.Notification.Local
+    * @function cancel
     */
-  extension.Local.cancel = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Local.cancel = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelLocalNotification", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelLocalNotification", arguments);
+        }
+    };
 
-  /**
-  * Cancels the last sent local notification.
-  * The last sent local notification will be remove from the notifications bar.
-  * @memberOf Cocoon.Notification.Local
-  * @function cancelLast
+    /**
+    * Cancels the last sent local notification.
+    * The last sent local notification will be remove from the notifications bar.
+    * @memberOf Cocoon.Notification.Local
+    * @function cancelLast
     */
-  extension.Local.cancelLast = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Local.cancelLast = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelLocalNotification", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelLocalNotification", arguments, true);
+        }
+    };
 
-  /**
-  * Cancels all sent local notifications.
-  * All the notifications will ve removed from the notifications bar.
-  * @memberOf Cocoon.Notification.Local
-  * @function cancelAllNotifications
+    /**
+    * Cancels all sent local notifications.
+    * All the notifications will ve removed from the notifications bar.
+    * @memberOf Cocoon.Notification.Local
+    * @function cancelAllNotifications
     */
-  extension.Local.cancelAllNotifications = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Local.cancelAllNotifications = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelAllLocalNotifications", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "cancelAllLocalNotifications", arguments);
+        }
+    };
 
-  /**
-  * Sends a local notification.
-  * @memberOf Cocoon.Notification.Local
-  * @function send
+    /**
+    * Sends a local notification.
+    * @memberOf Cocoon.Notification.Local
+    * @function send
     */
-  extension.Local.send = function(localNotification)
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Local.send = function(localNotification)
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "sendLocalNotification", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "sendLocalNotification", arguments, true);
+        }
+    };
 
-  /**
-  * Subscribes to a channel in order to receive notifications targeted to that channel.
-  * @memberOf Cocoon.Notification
-  * @function subscribe
+    /**
+    * Subscribes to a channel in order to receive notifications targeted to that channel.
+    * @memberOf Cocoon.Notification
+    * @function subscribe
     */
-  extension.subscribe = function(channel)
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.subscribe = function(channel)
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "subscribe", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "subscribe", arguments, true);
+        }
+    };
 
-  /**
-  * Unsubscribes from a channel in order to stop receiving notifications targeted to it.
-  * @memberOf Cocoon.Notification
-  * @function unsubscribe
+    /**
+    * Unsubscribes from a channel in order to stop receiving notifications targeted to it.
+    * @memberOf Cocoon.Notification
+    * @function unsubscribe
     */
-  extension.unsubscribe = function(channel)
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.unsubscribe = function(channel)
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "unsubscribe", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "unsubscribe", arguments, true);
+        }
+    };
 
-  /**
-  * Sends a push notification.
-  * @memberOf Cocoon.Notification.Push
-  * @function send
+    /**
+    * Sends a push notification.
+    * @memberOf Cocoon.Notification.Push
+    * @function send
     */
-  extension.Push.send = function(pushNotification)
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Push.send = function(pushNotification)
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "sendPushNotification", arguments, true);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "sendPushNotification", arguments, true);
+        }
+    };
 
-  /**
-  * (iOS only) Sets the badge number for this application.
-  * This is useful if you want to modify the badge number set by a notification.
-  * @memberOf Cocoon.Notification
-  * @function setBadgeNumber
+    /**
+    * (iOS only) Sets the badge number for this application.
+    * This is useful if you want to modify the badge number set by a notification.
+    * @memberOf Cocoon.Notification
+    * @function setBadgeNumber
     */
-  extension.setBadgeNumber = function(badgeNumber)
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.setBadgeNumber = function(badgeNumber)
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "setBadgeNumber", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "setBadgeNumber", arguments);
+        }
+    };
 
-  /**
-  * (iOS only) Returns the current badge number.
-  * @memberOf Cocoon.Notification
-  * @function getBadgeNumber
+    /**
+    * (iOS only) Returns the current badge number.
+    * @memberOf Cocoon.Notification
+    * @function getBadgeNumber
     */
-  extension.getBadgeNumber = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.getBadgeNumber = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getBadgeNumber", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getBadgeNumber", arguments);
+        }
+    };
 
-  /**
-  * Returns the last received user data from a Local notification.
-  * @memberOf Cocoon.Notification.Local
-  * @function getLastNotificationData
+    /**
+    * Returns the last received user data from a Local notification.
+    * @memberOf Cocoon.Notification.Local
+    * @function getLastNotificationData
     */
-  extension.Local.getLastNotificationData = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Local.getLastNotificationData = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getLastReceivedLocalNotificationData", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getLastReceivedLocalNotificationData", arguments);
+        }
+    };
 
-  /**
-  * Returns the last received user data from a Push notification.
-  * @memberOf Cocoon.Notification.Push
-  * @function getLastNotificationData
+    /**
+    * Returns the last received user data from a Push notification.
+    * @memberOf Cocoon.Notification.Push
+    * @function getLastNotificationData
     */
-  extension.Push.getLastNotificationData = function()
-  {
-    if (Cocoon.Notification.nativeAvailable)
+    extension.Push.getLastNotificationData = function()
     {
-      return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getLastReceivedPushNotificationData", arguments);
-    }
-  };
+        if (Cocoon.Notification.nativeAvailable)
+        {
+            return Cocoon.callNative("IDTK_SRV_NOTIFICATION", "getLastReceivedPushNotificationData", arguments);
+        }
+    };
 
-  extension.onRegisterForPushNotificationsSucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceRegistered");
+    extension.onRegisterForPushNotificationsSucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceRegistered");
 
-  extension.onUnregisterForPushNotificationsSucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceUnregistered");
+    extension.onUnregisterForPushNotificationsSucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceUnregistered");
 
-  extension.onRegisterForPushNotificationsFailed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceFailedToRegister");
+    extension.onRegisterForPushNotificationsFailed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationServiceFailedToRegister");
 
-  extension.onPushNotificationReceived = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationReceived");
+    extension.onPushNotificationReceived = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationReceived");
 
-  extension.onLocalNotificationReceived = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "localNotificationReceived");
+    extension.onLocalNotificationReceived = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "localNotificationReceived");
 
-  extension.onPushNotificationDeliverySucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationSuccessfullyDelivered");
+    extension.onPushNotificationDeliverySucceed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationSuccessfullyDelivered");
 
-  extension.onPushNotificationDeliveryFailed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationDeliveryError");
+    extension.onPushNotificationDeliveryFailed = new Cocoon.EventHandler("IDTK_SRV_NOTIFICATION", "Notification", "pushNotificationDeliveryError");
 
-  var signal = new Cocoon.Signal.createSignal();
+    var signal = new Cocoon.Signal.createSignal();
 
-  /**
-  * Allows to listen  to events called when a local notification is received.
-  * - The callback 'received' receives a parameter with the userData of the received notification when a local notification is received.
+    /**
+    * Allows to listen  to events called when a local notification is received.
+    * - The callback 'received' receives a parameter with the userData of the received notification when a local notification is received.
     * @event On received for local notifications callback
     * @memberof Cocoon.Notification.Local
-  * @example
-  * Cocoon.Notification.Local.on("notification", {
-    * received : function(userData){
-    *     console.log("A local notification has been received: " + JSON.stringify(userData));
-    * }
-  * });
+    * @example
+    * Cocoon.Notification.Local.on("notification", {
+    *   received : function(userData){
+    *       console.log("A local notification has been received: " + JSON.stringify(userData));
+    *   }
+    * });
     */
     signal.register("notification", {
-      received : extension.onLocalNotificationReceived
+        received : extension.onLocalNotificationReceived
     });
 
-  extension.Local.on = signal.expose();
+    extension.Local.on = signal.expose();
 
-  var signal = new Cocoon.Signal.createSignal();
+    var signal = new Cocoon.Signal.createSignal();
 
-  /**
-  * Allows to listen to events called about the registration for push notification.
-  * - The callback 'success' does not receive any parameter when the registration for push notification succeeds.
-  * - The callback 'unregister' does not receive any parameter when the unregistration for push notifications succeeds.
-  * - The callback 'error' receives a parameter with error information when the registration for push notifications fails.
+    /**
+    * Allows to listen to events called about the registration for push notification.
+    * - The callback 'success' does not receive any parameter when the registration for push notification succeeds.
+    * - The callback 'unregister' does not receive any parameter when the unregistration for push notifications succeeds.
+    * - The callback 'error' receives a parameter with error information when the registration for push notifications fails.
     * @event On register for push notifications callbacks
     * @memberof Cocoon.Notification.Push
     * @example
-  * Cocoon.Notification.Push.on("register", {
+    * Cocoon.Notification.Push.on("register", {
     *   success : function(){ ... }
-    * unregister : function(){ ... }
-    * error : function(error){ ... }
-  * });
+    *   unregister : function(){ ... }
+    *   error : function(error){ ... }
+    * });
     */
     signal.register("register", {
-      success : extension.onRegisterForPushNotificationsSucceed,
-      unregister : extension.onUnregisterForPushNotificationsSucceed,
-      error : extension.onRegisterForPushNotificationsFailed
+        success : extension.onRegisterForPushNotificationsSucceed,
+        unregister : extension.onUnregisterForPushNotificationsSucceed,
+        error : extension.onRegisterForPushNotificationsFailed
     });
 
-  /**
-  * Allows to listen to events called when a push notification  is received.
-  * - The callback 'received' receives a parameter with the userData of the received notification when a push notification is received.
+    /**
+    * Allows to listen to events called when a push notification  is received.
+    * - The callback 'received' receives a parameter with the userData of the received notification when a push notification is received.
     * @event On received for push notifications callback
     * @memberof Cocoon.Notification.Push
-  * @example
-  * Cocoon.Notification.Push.on("notification",{
-  * received : function(userData){
-    *     console.log("A push notification has been received: " + JSON.stringify(userData));
-    * }
-  * });
+    * @example
+    * Cocoon.Notification.Push.on("notification",{
+    *   received : function(userData){
+    *       console.log("A push notification has been received: " + JSON.stringify(userData));
+    *   }
+    * });
     */
     signal.register("notification", {
-      received : extension.onPushNotificationReceived,
+        received : extension.onPushNotificationReceived,
     });
 
-  /**
-  * Allows to listen to events called about the delivery proccess.
-  * - The callback 'success' receives a parameter with the notificationId of the delivered notification when a notification is successfully delivered.
-  * - The callback 'error' receives a parameter with error information when the delivery of a push notification fails.
+    /**
+    * Allows to listen to events called about the delivery proccess.
+    * - The callback 'success' receives a parameter with the notificationId of the delivered notification when a notification is successfully delivered.
+    * - The callback 'error' receives a parameter with error information when the delivery of a push notification fails.
     * @event On deliver for push notifications callbacks
     * @memberof Cocoon.Notification.Push
-  * @example
-  * Cocoon.Notification.Push.on("deliver", {
+    * @example
+    * Cocoon.Notification.Push.on("deliver", {
     *   success : function(notificationId){ ... }
-    * error : function(error){ ... }
-  * });
+    *   error : function(error){ ... }
+    * });
     */
     signal.register("deliver", {
-      success : extension.onPushNotificationDeliverySucceed,
-      error : extension.onPushNotificationDeliveryFailed
+        success : extension.onPushNotificationDeliverySucceed,
+        error : extension.onPushNotificationDeliveryFailed
     });
 
-  extension.Push.on = signal.expose();
+    extension.Push.on = signal.expose();
 
     return extension;
 
@@ -7936,11 +7936,11 @@ Cocoon.define("Cocoon.Social" , function(extension){
  */
 Cocoon.define("Cocoon.Multiplayer" , function(extension){
 
-  extension.MultiplayerService = function(nativeExtensionName, extensionName)
-  {
-    this.nativeExtensionName = nativeExtensionName;
-    this.extensionName = extensionName;
-      this.nativeAvailable = (!!window.ext) && (!!window.ext[this.nativeExtensionName]);
+    extension.MultiplayerService = function(nativeExtensionName, extensionName)
+    {
+        this.nativeExtensionName = nativeExtensionName;
+        this.extensionName = extensionName;
+        this.nativeAvailable = (!!window.ext) && (!!window.ext[this.nativeExtensionName]);
 
         var me = this;
 
@@ -7968,10 +7968,10 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
         this.on = signal.expose();
 
         return this;
-  };
+    };
 
 
-  extension.MultiplayerService.prototype = {
+    extension.MultiplayerService.prototype = {
 
         currentMatch: null,
 
@@ -8062,53 +8062,53 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
         getMatch : function() {
             return this.currentMatch;
         }
-  };
+    };
 
-  /**
-  * This type provides a transmission network between a group of users.
-  * The match might be returned before connections have been established between players. At this stage, all the players are in the process of connecting to each other.
-  * Always check the getExpectedPlayerCount value before starting a match. When its value reaches zero, all expected players are connected, and your game can begin the match.
-  * Do not forget to call the start method of the match when your game is ready to process received messages via onMatchDataReceived listener.
+    /**
+    * This type provides a transmission network between a group of users.
+    * The match might be returned before connections have been established between players. At this stage, all the players are in the process of connecting to each other.
+    * Always check the getExpectedPlayerCount value before starting a match. When its value reaches zero, all expected players are connected, and your game can begin the match.
+    * Do not forget to call the start method of the match when your game is ready to process received messages via onMatchDataReceived listener.
     * @constructor Match
     * @memberOf Cocoon.Multiplayer
-  * @param {string} nativeExtensionName The name of the native ext object extension property name.
-  * @param {string} extensionName The name of the CocoonJS object extension property name.
-  * @param {number} matchID The match ID user for native service bridge.
-  */
-  extension.Match = function(nativeExtensionName, extensionName, matchID)
-  {
-    if (typeof nativeExtensionName !== 'string') throw "The given native extension name '" + nativeExtensionName + "' is not a string.";
-    if (typeof extensionName !== 'string') throw "The given extension name '" + nativeExtensionName + "' is not a string.";
+    * @param {string} nativeExtensionName The name of the native ext object extension property name.
+    * @param {string} extensionName The name of the CocoonJS object extension property name.
+    * @param {number} matchID The match ID user for native service bridge.
+    */
+    extension.Match = function(nativeExtensionName, extensionName, matchID)
+    {
+        if (typeof nativeExtensionName !== 'string') throw "The given native extension name '" + nativeExtensionName + "' is not a string.";
+        if (typeof extensionName !== 'string') throw "The given extension name '" + nativeExtensionName + "' is not a string.";
 
-    this.nativeExtensionName = nativeExtensionName;
-    this.extensionName = extensionName;
-      this.nativeAvailable = Cocoon.nativeAvailable && typeof window.ext[nativeExtensionName] !== 'undefined';
-      this.matchID = matchID;
-      var me = this;
+        this.nativeExtensionName = nativeExtensionName;
+        this.extensionName = extensionName;
+        this.nativeAvailable = Cocoon.nativeAvailable && typeof window.ext[nativeExtensionName] !== 'undefined';
+        this.matchID = matchID;
+        var me = this;
 
-      this.onMatchDataReceived = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchDataReceived", function(sourceListener, args) {
-          if (me.matchID === args[0]) {
-            sourceListener(me, args[1], args[2]);
-          }
-        });
+        this.onMatchDataReceived = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchDataReceived", function(sourceListener, args) {
+                if (me.matchID === args[0]) {
+                    sourceListener(me, args[1], args[2]);
+                }
+            });
 
-      this.onMatchStateChanged = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchStateChanged", function(sourceListener, args) {
-          if (me.matchID === args[0]) {
-            sourceListener(me, args[1], args[2]);
-          }
-        });
+        this.onMatchStateChanged = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchStateChanged", function(sourceListener, args) {
+                if (me.matchID === args[0]) {
+                    sourceListener(me, args[1], args[2]);
+                }
+            });
 
-      this.onMatchConnectionWithPlayerFailed = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchConnectionWithPlayerFailed", function(sourceListener, args) {
-          if (me.matchID === args[0]) {
-            sourceListener(me, args[1], args[2]);
-          }
-        });
+        this.onMatchConnectionWithPlayerFailed = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchConnectionWithPlayerFailed", function(sourceListener, args) {
+                if (me.matchID === args[0]) {
+                    sourceListener(me, args[1], args[2]);
+                }
+            });
 
-      this.onMatchFailed = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchFailed", function(sourceListener, args) {
-          if (me.matchID === args[0]) {
-            sourceListener(me, args[1]);
-          }
-        });
+        this.onMatchFailed = new Cocoon.EventHandler(this.nativeExtensionName, this.extensionName, "onMatchFailed", function(sourceListener, args) {
+                if (me.matchID === args[0]) {
+                    sourceListener(me, args[1]);
+                }
+            });
 
 
 
@@ -8138,100 +8138,100 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
         });
 
         this.on = signal.expose();
-  };
+    };
 
-  extension.Match.prototype = {
+    extension.Match.prototype = {
 
-    /**
-    * Starts processing received messages. The user must call this method when the game is ready to process messages. Messages received before being prepared are stored and processed later.
+        /**
+        * Starts processing received messages. The user must call this method when the game is ready to process messages. Messages received before being prepared are stored and processed later.
         * @function start
         * @memberOf Cocoon.Multiplayer.Match
-    */
-    start : function() {
-      if (this.nativeAvailable) {
-        Cocoon.callNative(this.nativeExtensionName, "startMatch", [this.matchID], true);
-      }
-    },
+        */
+        start : function() {
+            if (this.nativeAvailable) {
+                Cocoon.callNative(this.nativeExtensionName, "startMatch", [this.matchID], true);
+            }
+        },
 
-    /**
-    * Transmits data to all players connected to the match. The match queues the data and transmits it when the network becomes available.
+        /**
+        * Transmits data to all players connected to the match. The match queues the data and transmits it when the network becomes available.
         * @function sendDataToAllPlayers
         * @memberOf Cocoon.Multiplayer.Match
-    * @param {string} data The data to transmit.
-    * @param {Cocoon.Multiplayer.SendDataMode} [sendMode] The optional {@link Cocoon.Multiplayer.SendDataMode} value. The default value is RELIABLE.
-    * @return {boolean} TRUE if the data was successfully queued for transmission; FALSE if the match was unable to queue the data.
-    */
-    sendDataToAllPlayers : function(data, sendMode) {
-      if (this.nativeAvailable) {
-        return Cocoon.callNative(this.nativeExtensionName, "sendDataToAllPlayers", [this.matchID, data, sendMode]);
-      }
-    },
+        * @param {string} data The data to transmit.
+        * @param {Cocoon.Multiplayer.SendDataMode} [sendMode] The optional {@link Cocoon.Multiplayer.SendDataMode} value. The default value is RELIABLE.
+        * @return {boolean} TRUE if the data was successfully queued for transmission; FALSE if the match was unable to queue the data.
+        */
+        sendDataToAllPlayers : function(data, sendMode) {
+            if (this.nativeAvailable) {
+                return Cocoon.callNative(this.nativeExtensionName, "sendDataToAllPlayers", [this.matchID, data, sendMode]);
+            }
+        },
 
-    /**
-    * Transmits data to a list of connected players. The match queues the data and transmits it when the network becomes available.
+        /**
+        * Transmits data to a list of connected players. The match queues the data and transmits it when the network becomes available.
         * @function sendData
         * @memberOf Cocoon.Multiplayer.Match
-    * @param {string} data The data to transmit
-    * @param {array} playerIDs An array containing the identifier strings for the list of players who should receive the data.
-    * @param {Cocoon.Multiplayer.SendDataMode} [sendMode] The optional {@link Cocoon.Multiplayer.SendDataMode} value. The default value is RELIABLE.
-    * @return {boolean} TRUE if the data was successfully queued for transmission; FALSE if the match was unable to queue the data.
-    */
-    sendData : function(data, playerIDs,  sendMode) {
-      if (this.nativeAvailable) {
-        return Cocoon.callNative(this.nativeExtensionName, "sendData", [this.matchID, data, playerIDs, sendMode]);
-      }
-    },
+        * @param {string} data The data to transmit
+        * @param {array} playerIDs An array containing the identifier strings for the list of players who should receive the data.
+        * @param {Cocoon.Multiplayer.SendDataMode} [sendMode] The optional {@link Cocoon.Multiplayer.SendDataMode} value. The default value is RELIABLE.
+        * @return {boolean} TRUE if the data was successfully queued for transmission; FALSE if the match was unable to queue the data.
+        */
+        sendData : function(data, playerIDs,  sendMode) {
+            if (this.nativeAvailable) {
+                return Cocoon.callNative(this.nativeExtensionName, "sendData", [this.matchID, data, playerIDs, sendMode]);
+            }
+        },
 
-    /**
-    * Disconnects the local player from the match and releases the match. Calling disconnect notifies other players that you have left the match.
+        /**
+        * Disconnects the local player from the match and releases the match. Calling disconnect notifies other players that you have left the match.
         * @function disconnect
         * @memberOf Cocoon.Multiplayer.Match
-    */
-    disconnect : function() {
-      if (this.nativeAvailable) {
-        return Cocoon.callNative(this.nativeExtensionName, "disconnect", [this.matchID], true);
-      }
-    },
+        */
+        disconnect : function() {
+            if (this.nativeAvailable) {
+                return Cocoon.callNative(this.nativeExtensionName, "disconnect", [this.matchID], true);
+            }
+        },
 
-    /**
-    * Requests additional information of the current players in the match.
+        /**
+        * Requests additional information of the current players in the match.
         * @function requestPlayersInfo
         * @memberOf Cocoon.Multiplayer.Match
         * @param {Function} callback The callback function. Response params: players array and error
-    */
-    requestPlayersInfo : function(callback) {
-      if (this.nativeAvailable){
-        return Cocoon.callNative(this.nativeExtensionName, "requestPlayersInfo", [this.matchID, callback], true);
-      }
-    },
+        */
+        requestPlayersInfo : function(callback) {
+            if (this.nativeAvailable){
+                return Cocoon.callNative(this.nativeExtensionName, "requestPlayersInfo", [this.matchID, callback], true);
+            }
+        },
 
-    /**
-    * Returns the remaining players count who have not yet connected to the match.
-    * @function getExpectedPlayerCount
+        /**
+        * Returns the remaining players count who have not yet connected to the match.
+        * @function getExpectedPlayerCount
         * @memberOf Cocoon.Multiplayer.Match
-    * @return {number} The remaining number of players who have not yet connected to the match.
-    */
-    getExpectedPlayerCount : function() {
-      if (this.nativeAvailable) {
-        return Cocoon.callNative(this.nativeExtensionName, "getExpectedPlayerCount", [this.matchID]);
-      }
-    },
+        * @return {number} The remaining number of players who have not yet connected to the match.
+        */
+        getExpectedPlayerCount : function() {
+            if (this.nativeAvailable) {
+                return Cocoon.callNative(this.nativeExtensionName, "getExpectedPlayerCount", [this.matchID]);
+            }
+        },
 
-    /**
-    * Returns an array with all the player identifiers taking part in the match.
-    * @function getPlayerIDs
+        /**
+        * Returns an array with all the player identifiers taking part in the match.
+        * @function getPlayerIDs
         * @memberOf Cocoon.Multiplayer.Match
-    * @return {array} The player identifiers for the players in the match.
-    */
-    getPlayerIDs : function() {
-      if (this.nativeAvailable){
-        return Cocoon.callNative(this.nativeExtensionName, "getPlayerIDs", [this.matchID]);
-      }
-    },
+        * @return {array} The player identifiers for the players in the match.
+        */
+        getPlayerIDs : function() {
+            if (this.nativeAvailable){
+                return Cocoon.callNative(this.nativeExtensionName, "getPlayerIDs", [this.matchID]);
+            }
+        },
 
         /**
         * Gets the local playerID taking part in the match.
-    * @function getLocalPlayerID
+        * @function getLocalPlayerID
         * @memberOf Cocoon.Multiplayer.Match
         * @return {string} the playerID attached to the match manager.
         */
@@ -8242,7 +8242,7 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
             return "";
         },
 
-  };
+    };
 
     /**
     * This object represents the modes to send data.
@@ -8252,12 +8252,12 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
     * @property {string} Cocoon.Multiplayer.SendDataMode.RELIABLE The data is sent continuously until it is successfully received by the intended recipients or the connection times out.
     * @property {string} Cocoon.Multiplayer.SendDataMode.UNRELIABLE The data is sent once and is not sent again if a transmission error occurs.
     */
-  extension.SendDataMode =  {
+    extension.SendDataMode =  {
 
-      RELIABLE : 0,
+        RELIABLE : 0,
 
-      UNRELIABLE : 1
-  };
+        UNRELIABLE : 1
+    };
 
     /**
     * This object represents the connection state of a player.
@@ -8268,14 +8268,14 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
     * @property {string} Cocoon.Multiplayer.ConnectionState.CONNECTED The connection is in connected state.
     * @property {string} Cocoon.Multiplayer.ConnectionState.DISCONNECTED The connection is in disconnected state.
     */
-  extension.ConnectionState = {
+    extension.ConnectionState = {
 
-      UNKNOWN : 0,
+        UNKNOWN : 0,
 
-      CONNECTED : 1,
+        CONNECTED : 1,
 
-      DISCONNECTED : 2
-  };
+        DISCONNECTED : 2
+    };
 
     /**
     * The object that represents the information of a player inside a multiplayer match.
@@ -8285,12 +8285,12 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
     * @property {string} Cocoon.Multiplayer.PlayerInfo.userID The id of the user.
     * @property {string} Cocoon.Multiplayer.PlayerInfo.userName The name of the user.
     */
-  extension.PlayerInfo = function(userID, userName) {
+    extension.PlayerInfo = function(userID, userName) {
 
-    this.userID = userID;
+        this.userID = userID;
 
-    this.userName = userName;
-  };
+        this.userName = userName;
+    };
 
     /**
     * This object is used to specify the parameters for a new multiplayer match.
@@ -8299,26 +8299,26 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
     * @property {object} Cocoon.Multiplayer.MatchRequest - The object itself
     * @property {number} Cocoon.Multiplayer.MatchRequest.minPlayers The minimum number of players that may join the match.
     * @property {number} Cocoon.Multiplayer.MatchRequest.maxPlayers The maximum number of players that may join the match.
-  * @property {array} [Cocoon.Multiplayer.MatchRequest.playersToInvite] Optional list of player identifers for players to invite to the match.
+    * @property {array} [Cocoon.Multiplayer.MatchRequest.playersToInvite] Optional list of player identifers for players to invite to the match.
     * @property {number} [Cocoon.Multiplayer.MatchRequest.playerGroup] Optional number identifying a subset of players allowed to join the match.
     * @property {number} [Cocoon.Multiplayer.MatchRequest.playerAttributes] Optional mask that specifies the role that the local player would like to play in the game.
     */
-  extension.MatchRequest = function(minPlayers, maxPlayers, playersToInvite, playerGroup, playerAttributes) {
+    extension.MatchRequest = function(minPlayers, maxPlayers, playersToInvite, playerGroup, playerAttributes) {
 
-    this.minPlayers = minPlayers;
+        this.minPlayers = minPlayers;
 
-    this.maxPlayers = maxPlayers;
+        this.maxPlayers = maxPlayers;
 
-    this.playersToInvite = playersToInvite;
+        this.playersToInvite = playersToInvite;
 
-    this.playerGroup = playerGroup;
+        this.playerGroup = playerGroup;
 
-    this.playerAttributes = playerAttributes;
+        this.playerAttributes = playerAttributes;
 
-    return this;
-  };
+        return this;
+    };
 
-  return extension;
+    return extension;
 });;/**
  *
  * <div class="alert alert-warning">
@@ -8511,13 +8511,13 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
  *
  * SocialGooglePlay.login(function(loggedIn, error) {
  *  if(loggedIn){
- *    var request = new Cocoon.Multiplayer.MatchRequest(2,2);
- *    var handleMatch = function(match, error){
+ *      var request = new Cocoon.Multiplayer.MatchRequest(2,2);
+ *      var handleMatch = function(match, error){
  *
- *    }
- *    ...
- *    MultiplayerGooglePlay.findMatch(request, handleMatch);
- *    ...
+ *      }
+ *      ...
+ *      MultiplayerGooglePlay.findMatch(request, handleMatch);
+ *      ...
  *  }
  * });
  */
@@ -8546,12 +8546,12 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
      */
 
      /**
-   * Cancels the ongoing automatch request.
-   * @function cancelAutoMatch
-   * @memberOf Cocoon.Multiplayer.GooglePlayGames
-   */
+     * Cancels the ongoing automatch request.
+     * @function cancelAutoMatch
+     * @memberOf Cocoon.Multiplayer.GooglePlayGames
+     */
 
-   /**
+     /**
      * Automatically adds players to an ongoing match owned by the user.
      * @function addPlayersToMatch
      * @memberOf Cocoon.Multiplayer.GooglePlayGames
@@ -8567,7 +8567,7 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
      * @return {Cocoon.Multiplayer.Match} The current match reference.
      */
 
-  return extension;
+    return extension;
 });
 ;/**
  *
@@ -8586,20 +8586,20 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
  *
  * SocialGameCenter.login(function(loggedIn, error) {
  *  if(loggedIn){
- *    var request = new Cocoon.Multiplayer.MatchRequest(2,2);
- *    var handleMatch = function(match, error){
+ *      var request = new Cocoon.Multiplayer.MatchRequest(2,2);
+ *      var handleMatch = function(match, error){
  *
- *    }
- *    ...
- *    MultiplayerGameCenter.findMatch(request, handleMatch);
- *    ...
+ *      }
+ *      ...
+ *      MultiplayerGameCenter.findMatch(request, handleMatch);
+ *      ...
  *  }
  * });
  */
 Cocoon.define("Cocoon.Multiplayer" , function(extension){
 
-  extension.GameCenter = new Cocoon.Multiplayer.MultiplayerService("IDTK_SRV_MULTIPLAYER_GAMECENTER", "Multiplayer.GameCenter");
-  /**
+    extension.GameCenter = new Cocoon.Multiplayer.MultiplayerService("IDTK_SRV_MULTIPLAYER_GAMECENTER", "Multiplayer.GameCenter");
+    /**
      * Presents a system View for the matchmaking and creates a new Match.
      * @function findMatch
      * @memberOf Cocoon.Multiplayer.GameCenter
@@ -8620,12 +8620,12 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
      */
 
      /**
-   * Cancels the ongoing automatch request.
-   * @function cancelAutoMatch
-   * @memberOf Cocoon.Multiplayer.GameCenter
-   */
+     * Cancels the ongoing automatch request.
+     * @function cancelAutoMatch
+     * @memberOf Cocoon.Multiplayer.GameCenter
+     */
 
-   /**
+     /**
      * Automatically adds players to an ongoing match owned by the user.
      * @function addPlayersToMatch
      * @memberOf Cocoon.Multiplayer.GameCenter
@@ -8640,5 +8640,5 @@ Cocoon.define("Cocoon.Multiplayer" , function(extension){
      * @memberOf Cocoon.Multiplayer.GameCenter
      * @return {Cocoon.Multiplayer.Match} The current match reference.
      */
-  return extension;
+    return extension;
 });

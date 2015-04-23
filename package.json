@@ -12,7 +12,8 @@
   "dependencies": {
     "three": "^0.70.0",
     "three-orbit-viewer": "^69.2.6",
-    "touches": "^1.0.3"
+    "touches": "^1.0.3",
+    "xhr": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
@@ -21,7 +22,7 @@
     "watchify": "^2.4.0"
   },
   "scripts": {
-    "start": "budo index.js:bundle.js --live | garnish -v",
+    "start": "budo index.js:bundle.js --port 8000 --live | garnish -v",
     "bundle": "browserify index.js -o bundle.js",
     "zip": "rm -rf test-capture.zip && zip -r test-capture.zip *.{js,html,png}",
     "build": "npm run bundle && npm run zip"
