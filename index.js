@@ -1,22 +1,6 @@
 require('./cocoon.js')
 
-if (navigator.isCocoonJS) {
-  setTimeout(function() {
-    Cocoon.Dialog.showKeyboard({
-        type: Cocoon.Dialog.keyboardType.TEXT,
-    },{
-        insertText: function(inserted) {
-          console.log("Insert!", inserted)
-        },
-        deleteBackward: function() {
-          console.log("DELETE")
-        },
-        done: function() {
-          console.log("SUCCESS")
-        },
-        cancel: function(){
-          console.log("CANCEL")
-        }
-    });
-  }, 2000)
-}
+require('touches')().on('start', function() {
+  console.log("Sharing")
+  Cocoon.Social.share( 'Check out my sweet mustang! http://192.168.1.3:9966/pin.html' );
+})
