@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "2d-context": "^1.2.0",
+    "domready": "^1.0.8",
     "three": "^0.70.0",
     "three-orbit-viewer": "^69.2.6",
-    "touches": "^1.0.3"
+    "touches": "^1.0.3",
+    "word-wrapper": "^1.0.7"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
