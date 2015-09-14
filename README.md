@@ -2,8 +2,6 @@
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
-Testing a bug in CocoonJS with toDataURL. Steps to reproduce:
-
 ```sh
 git clone -b equirect https://github.com/mattdesl/test-coocoon-canvas-capture.git
 cd test-cocoon-canvas-capture
