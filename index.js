@@ -29,11 +29,16 @@ sphere.rotation.y = Math.PI/2 - 0.5
 
 app.scene.add(sphere)
 
-render({
-  id: 'ZI4ZNb4CDCEUBpGNJRSkaw',
-  worldSize: { width: 13312, height: 6656 },
-  tileSize: { width: 512, height: 512 }
-})
+var count = 0
+start()
+
+function start () {
+  render({
+    id: 'ZI4ZNb4CDCEUBpGNJRSkaw',
+    worldSize: { width: 13312, height: 6656 },
+    tileSize: { width: 512, height: 512 }
+  })  
+}
 
 function render (opt) {
   var renderer = app.renderer
@@ -47,7 +52,7 @@ function render (opt) {
   var maxSize = gl.getParameter(gl.MAX_TEXTURE_SIZE)
   var zoom = Math.max(0, Math.min(4, bestZoom(maxSize)))
     
-  equirect(opt.id, {
+  var emitter = equirect(opt.id, {
     zoom: zoom,
     tiles: {
       worldSize: opt.worldSize,
@@ -75,8 +80,21 @@ function render (opt) {
     gl.bindTexture(gl.TEXTURE_2D, handle)
     gl.texSubImage2D(gl.TEXTURE_2D, 0, x, y,
           gl.RGBA, gl.UNSIGNED_BYTE, ev.image)
-  }).on('complete', function () {
+    if (ev.originalImage.dispose) {
+      console.log("disposing image")
+      ev.originalImage.dispose()
+    }
+  }).on('complete', function (canvas) {
     console.log("Finished...")
+    if (canvas.dispose) {
+      console.log("disposing canvas")
+      canvas.dispose()
+    }
     Cocoon.Utils.logMemoryInfo();
+  
+    count++
+    if (count >= 10)
+      return   
+    setTimeout(start, 500)
   })
 }
