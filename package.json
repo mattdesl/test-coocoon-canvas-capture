@@ -10,12 +10,12 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
-    "2d-context": "^1.2.0",
-    "domready": "^1.0.8",
+    "awesome-streetview": "^1.1.6",
+    "google-panorama-by-location": "^3.0.1",
+    "google-panorama-equirectangular": "^1.1.5",
+    "google-panorama-zoom-level": "^1.0.0",
     "three": "^0.70.0",
-    "three-orbit-viewer": "^69.2.6",
-    "touches": "^1.0.3",
-    "word-wrapper": "^1.0.7"
+    "three-orbit-viewer": "^69.3.0"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
