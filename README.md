@@ -5,7 +5,7 @@
 Testing a bug in CocoonJS with toDataURL. Steps to reproduce:
 
 ```sh
-git clone https://github.com/mattdesl/test-coocoon-canvas-capture.git
+git clone -b equirect https://github.com/mattdesl/test-coocoon-canvas-capture.git
 cd test-cocoon-canvas-capture
 
 npm install
@@ -27,12 +27,7 @@ npm run start
 
 And then open `localhost:9966` -- file changes to `index.js` will trigger a live reload event.
 
-
-Expected output (Webview+)
-![screen](http://i.imgur.com/hwPRe4N.png)
-
-Actual output (Canvas+)
-![screen2](http://i.imgur.com/Vx6T3Y7.png)
+Run with CocoonJS to see the memory log; only 1 WebGL texture and 2 canvases total should be created, instead one is created for each new tile.
 
 ## License
 
