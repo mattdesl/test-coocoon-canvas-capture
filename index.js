@@ -1,5 +1,3 @@
-// var panorama = require('google-panorama-by-location')
-// var awesome = require('awesome-streetview')
 var equirect = require('google-panorama-equirectangular/intermediate')
 var THREE = require('three')
 var createOrbitViewer = require('three-orbit-viewer')(THREE)
@@ -37,17 +35,6 @@ render({
   tileSize: { width: 512, height: 512 }
 })
 
-// function load () {
-//   var location = awesome()
-//   sphere.visible = false
-//   console.log('Location: %s', location.join(', '))
-//   panorama(location, function (err, result) {
-//     if (err) throw err
-//     console.log(result.id)
-//     console.log(result.tiles.worldSize, result.tiles.tileSize)
-//   })
-// }
-
 function render (opt) {
   var renderer = app.renderer
 
@@ -69,7 +56,10 @@ function render (opt) {
     crossOrigin: 'Anonymous'
   }).on('start', function (data) {
     texHeight = data.height
-
+    
+    console.log("Starting...")
+    Cocoon.Utils.logMemoryInfo();
+    
     // reshape the texture initially with transparent data
     gl.bindTexture(gl.TEXTURE_2D, handle)
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, data.width, data.height,
@@ -86,6 +76,7 @@ function render (opt) {
     gl.texSubImage2D(gl.TEXTURE_2D, 0, x, y,
           gl.RGBA, gl.UNSIGNED_BYTE, ev.image)
   }).on('complete', function () {
-    console.log('done loading')
+    console.log("Finished...")
+    Cocoon.Utils.logMemoryInfo();
   })
 }
