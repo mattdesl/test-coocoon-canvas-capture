@@ -2,10 +2,10 @@
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
-Testing a bug in CocoonJS with toDataURL. Steps to reproduce:
+Testing a bug with predictive keyboard.
 
 ```sh
-git clone https://github.com/mattdesl/test-coocoon-canvas-capture.git
+git clone -b keyboard https://github.com/mattdesl/test-coocoon-canvas-capture.git
 cd test-cocoon-canvas-capture
 
 npm install
@@ -28,11 +28,33 @@ npm run start
 And then open `localhost:9966` -- file changes to `index.js` will trigger a live reload event.
 
 
-Expected output (Webview+)
-![screen](http://i.imgur.com/hwPRe4N.png)
+On Android devices with Preditive Keyboard enabled, typing in text will start to "double up."
 
-Actual output (Canvas+)
-![screen2](http://i.imgur.com/Vx6T3Y7.png)
+1. Open ZIP in CocoonJS Launcher with Canvas+
+2. Tap on screen to open keyboard
+3. Type in "C", "A", "T"
+4. Close keyboard ("Done" key)
+5. Check console, result is below:
+
+```
+user entered: ccacat
+ccacat
+cca
+c
+user starts editing
+```
+
+This seems to be because `insertText` is giving the predictive characters, instead of the character last pressed on the user's keyboard. Expected result:
+
+```
+user entered: cat
+t
+a
+c
+user starts editing
+```
+
+On HTC One, no keyboard appears at all in Canvas+.
 
 ## License
 
